@@ -87,7 +87,7 @@ while (endloop3 < 1):
     if not info == False:
         print("server up")
         if info.player_count >= info.max_players:
-            print("server is full")
+            print("Server is full")
         else:
             print(f"join {serverip}:{serverport}")
             source_functions.run_cmd(f"connect {serverip}:{serverport}")

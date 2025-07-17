@@ -7,7 +7,6 @@ def run_cmd(cmd):
     pyautogui.FAILSAFE = False
     time.sleep(3)
     pydirectinput.press('F7')
-    print("f7")
     time.sleep(1)
     pyautogui.write(cmd)
     time.sleep(1)
