@@ -6,3 +6,4 @@ make_venv.bat
 load_venv.bat
 test1.py
 test2.py
+debug.log

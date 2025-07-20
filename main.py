@@ -122,6 +122,7 @@ while (endloop3 < 1):
                         inserver = 0
                         do_check = 1
                     else:
+                        # what
                         pydirectinput.press('esc')
                 if "Server connection timed out" in conlist:
                     print("FUCK")
