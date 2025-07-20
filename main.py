@@ -121,6 +121,8 @@ while (endloop3 < 1):
                         source_functions.move_demos(gamedir, demosdirname)
                         inserver = 0
                         do_check = 1
+                    else:
+                        pydirectinput.press('esc')
                 if "Server connection timed out" in conlist:
                     print("FUCK")
                     time.sleep(3)
