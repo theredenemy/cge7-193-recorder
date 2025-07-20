@@ -113,6 +113,7 @@ while (endloop3 < 1):
                     inserver = 0
                     do_check = 1
                 if listfindlib.findtext(conlist, "Disconnect") == True:
+                    time.sleep(2)
                     source_functions.run_cmd("echo in-server")
                     if listfindlib.findtext(conlist, "in-server") == False:
                         pydirectinput.press("enter")
