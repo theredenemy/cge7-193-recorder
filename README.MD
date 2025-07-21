@@ -1,7 +1,7 @@
 # cge7-193-recorder
 1. Drag and Drop the CFG folder into your TF2 directory (C:\Program Files (x86)\Steam\steamapps\common\Team Fortress 2\tf)
 
-(if you have tf2 installed in a different directory modify the gamedir variable in main.py)
+(if you have tf2 installed in a different directory modify the gamedir variable in SOURCETV.ini)
 
 2. Add this to your Steam Launch options
 ```cmd
