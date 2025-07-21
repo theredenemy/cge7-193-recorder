@@ -7,3 +7,6 @@ load_venv.bat
 test1.py
 test2.py
 debug.log
+SOURCETV.ini
+test3.py
+test4.py

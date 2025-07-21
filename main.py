@@ -10,6 +10,8 @@ import source_functions
 import re
 import listfindlib
 import fileinuse_functions
+import configparser
+import configHelper
 pydirectinput.FAILSAFE = False
 pyautogui.FAILSAFE = False
 def start_tf2(gamedir, logfilename):
@@ -37,12 +39,34 @@ def start_tf2(gamedir, logfilename):
             conlist = consolelogger.consolelog(gamedir, logfilename, nextline)
             nextline = conlist[-1]
             lastmodtime = os.path.getmtime(logfile)
+def makeConfig():
+  import configparser
+  config_file = configparser.ConfigParser()
+
+
+  config_file.add_section("SOURCETV")
+
+  config_file.set("SOURCETV", "gamedir", "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Team Fortress 2\\tf")
+  config_file.set("SOURCETV", "logfilename", "datalogtf2.txt")
+  config_file.set("SOURCETV", "serverip", "79.127.217.197")
+  config_file.set("SOURCETV", "serverport", "22913")
+  config_file.set("SOURCETV", "demosdirname", "demos")
+
+  with open(r"SOURCETV.ini", 'w') as configfileObj:
+     config_file.write(configfileObj)
+     configfileObj.flush()
+     configfileObj.close()
+
+  print("Config file 'SOURCETV.ini' created")
 # Start of Script
-gamedir = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Team Fortress 2\\tf"
-logfilename = "datalogtf2.txt"
-serverip = "79.127.217.197"
-serverport = 22913
-demosdirname = "demos"
+if os.path.isfile("SOURCETV.ini") == False:
+    makeConfig()
+config = configHelper.read_config('SOURCETV.ini')
+gamedir = config['SOURCETV']['gamedir']
+logfilename = config['SOURCETV']['logfilename']
+serverip = config['SOURCETV']['serverip']
+serverport = config.getint('SOURCETV', 'serverport')
+demosdirname = config['SOURCETV']['demosdirname']
 endloop1 = 0
 endloop2 = 0
 endloop3 = 0
