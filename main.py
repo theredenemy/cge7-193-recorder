@@ -136,6 +136,20 @@ while (endloop3 < 1):
                     pydirectinput.press("enter")
                     inserver = 0
                     do_check = 1
+                if "The server you are trying to connect to is running" in conlist:
+                    # RESET GAME AND LOGS BREAK
+                    os.system("taskkill /f /im tf_win64.exe")
+                    while(fileinuse_functions.is_file_in_use(logfile) == True):
+                        pass
+                    time.sleep(5)
+                    consolelogger.logstart(gamedir, logfilename)
+                    lastmodtime = os.path.getmtime(logfile)
+                    start_tf2(gamedir, logfilename)
+                    lastmodtime = os.path.getmtime(logfile)
+                    conlist = consolelogger.consolelog(gamedir, logfilename)
+                    nextline = conlist[-1]
+                    do_check = 0
+                    
                 if listfindlib.findtext(conlist, "Disconnect") == True:
                     time.sleep(2)
                     source_functions.run_cmd("echo in-server")
