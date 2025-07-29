@@ -18,7 +18,7 @@ def logstart(gamedir, logfilename):
             return
     if os.path.isfile(logfile) == True:
         try:
-            os.rename(logfile, f"gamelogs\\tf2log_{time.strftime("%y%m%d%H%M%S")}.txt")
+            os.rename(logfile, f"gamelogs\\tf2log_{time.strftime("%Y-%m-%d-%H-%M-%S")}.txt")
         except PermissionError:
             print("gameopened")
     if os.path.isfile(logfile) == False:
@@ -67,6 +67,11 @@ def consolelog(gamedir, logfilename, startline=1):
         logstart.close
     
 if __name__ == '__main__':
-    data = consolelog("C:\\Users\\Owner\\Documents\\steam\\steamapps\\common\\Team Fortress 2\\tf", "datalogtf2.txt")
-    print(data)
+    if os.path.isfile("SOURCETV.ini") == True:
+        import configHelper
+        config = configHelper.read_config('SOURCETV.ini')
+        gamedir = config['SOURCETV']['gamedir']
+        logfilename = config['SOURCETV']['logfilename']
+        data = consolelog(gamedir, logfilename)
+        print(data)
     

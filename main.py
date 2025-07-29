@@ -14,6 +14,11 @@ import configparser
 import configHelper
 pydirectinput.FAILSAFE = False
 pyautogui.FAILSAFE = False
+gamedir_default = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Team Fortress 2\\tf"
+logfilename_default = "datalogtf2.txt"
+serverip_default = "79.127.217.197"
+serverport_default = "22913"
+demosdirname_default = "demos"
 def start_tf2(gamedir, logfilename):
     logfile = f"{gamedir}\\{logfilename}"
     consolelogger.logstart(gamedir, logfilename)
@@ -46,11 +51,11 @@ def makeConfig():
 
   config_file.add_section("SOURCETV")
 
-  config_file.set("SOURCETV", "gamedir", "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Team Fortress 2\\tf")
-  config_file.set("SOURCETV", "logfilename", "datalogtf2.txt")
-  config_file.set("SOURCETV", "serverip", "79.127.217.197")
-  config_file.set("SOURCETV", "serverport", "22913")
-  config_file.set("SOURCETV", "demosdirname", "demos")
+  config_file.set("SOURCETV", "gamedir", gamedir_default)
+  config_file.set("SOURCETV", "logfilename", logfilename_default)
+  config_file.set("SOURCETV", "serverip", serverip_default)
+  config_file.set("SOURCETV", "serverport", serverport_default)
+  config_file.set("SOURCETV", "demosdirname", demosdirname_default)
 
   with open(r"SOURCETV.ini", 'w') as configfileObj:
      config_file.write(configfileObj)
@@ -61,12 +66,12 @@ def makeConfig():
 # Start of Script
 if os.path.isfile("SOURCETV.ini") == False:
     makeConfig()
-config = configHelper.read_config('SOURCETV.ini')
-gamedir = config['SOURCETV']['gamedir']
-logfilename = config['SOURCETV']['logfilename']
-serverip = config['SOURCETV']['serverip']
-serverport = config.getint('SOURCETV', 'serverport')
-demosdirname = config['SOURCETV']['demosdirname']
+config = "SOURCETV.ini"
+gamedir = configHelper.read_config(config, "SOURCETV", "gamedir", gamedir_default)
+logfilename = configHelper.read_config(config, "SOURCETV", "logfilename", logfilename_default)
+serverip = configHelper.read_config(config, "SOURCETV", "serverip", serverip_default)
+serverport = configHelper.read_config(config, "SOURCETV", "serverport", serverport_default, True)
+demosdirname = configHelper.read_config(config, "SOURCETV", "demosdirname", demosdirname_default)
 endloop1 = 0
 endloop2 = 0
 endloop3 = 0
