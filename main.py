@@ -91,6 +91,7 @@ while (endloop3 < 1):
         print("server up")
         if not info.version == server_version:
             print("RESET GAME")
+            server_version = info.version
             # RESET GAME AND LOGS BREAK
             os.system(f"taskkill /f /im {process_name}")
             while(fileinuse_functions.is_file_in_use(logfile) == True):
@@ -145,6 +146,7 @@ while (endloop3 < 1):
                         source_functions.move_demos(gamedir, demosdirname)
                         inserver = 0
                         print("RESET GAME")
+                        server_version = info.version
                         # RESET GAME AND LOGS BREAK
                         os.system(f"taskkill /f /im {process_name}")
                         while(fileinuse_functions.is_file_in_use(logfile) == True):
