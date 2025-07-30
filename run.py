@@ -20,7 +20,6 @@ if os.path.isdir(venvdir) == False:
     
     f = open("make_venv.bat", "w")
     makevenvbat = f'''python -m venv {venvdir}
-    cls
     call {venvdir}/Scripts/activate.bat
     python -m pip install --upgrade pip
     pip install -r requirements.txt'''
