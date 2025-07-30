@@ -3,3 +3,4 @@ pydirectinput
 pywin32
 python-a2s
 psutil
+pywinauto
