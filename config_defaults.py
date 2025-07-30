@@ -1,0 +1,7 @@
+gamedir_default = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Team Fortress 2\\tf"
+logfilename_default = "datalogtf2.txt"
+serverip_default = "79.127.217.197"
+serverport_default = "22913"
+demosdirname_default = "demos"
+appid_default = "440"
+process_name_default = "tf_win64.exe"

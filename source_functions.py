@@ -1,3 +1,11 @@
+import consolelogger
+import processchecklib
+
+
+import os
+import time
+
+
 def run_cmd(cmd):
     import os
     import pydirectinput
@@ -69,6 +77,50 @@ def move_demos(gamedir, demosdirname):
     else:
         print("nope")
                     
-                        
+def get_pid(process_name):
+    import psutil
+    pid = None
+    
+    for proc in psutil.process_iter(['pid', 'name']):
+        if proc.info['name'].lower() == process_name.lower():
+            pid = proc.info['pid']
+            return pid
+
+def set_focus(process_name):
+    from pywinauto import Application
+    pid = get_pid(process_name)
+    app = Application().connect(process=pid)
+    app.top_window().set_focus()
+
+
+def start_game(gamedir, logfilename, appid, process_name):
+    logfile = f"{gamedir}\\{logfilename}"
+    consolelogger.logstart(gamedir, logfilename)
+    lastmodtime = os.path.getmtime(logfile)
+    endloop1 = 0
+    endloop2 = 0
+    os.system(f"taskkill /f /im {process_name}")
+    time.sleep(3)
+    os.system(f"start steam://rungameid/{appid}")
+    print("wait")
+    while (endloop1 < 1):
+        if processchecklib.process_check(process_name) == True:
+            endloop1 = 1
+    while (endloop2 < 1):
+        if not lastmodtime == os.path.getmtime(logfile):
+            conlist = consolelogger.consolelog(gamedir, logfilename)
+            nextline = conlist[-1]
+            lastmodtime = os.path.getmtime(logfile)
+            if "GAME START" in conlist:
+                print('hi')
+                time.sleep(3)
+                endloop2 = 1
+            conlist = consolelogger.consolelog(gamedir, logfilename, nextline)
+            nextline = conlist[-1]
+            lastmodtime = os.path.getmtime(logfile)
+    
+    
+
+                               
                 
             

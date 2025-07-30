@@ -1,4 +1,5 @@
 /.venv
+/venv
 /__pycache__
 /demofiles
 /gamelogs
@@ -11,3 +12,6 @@ SOURCETV.ini
 test3.py
 test4.py
 test5.py
+checksums.ini
+SOURCETVold.ini
+SOURCETVold2.ini
