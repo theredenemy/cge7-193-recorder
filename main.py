@@ -36,6 +36,18 @@ endloop1 = 0
 endloop2 = 0
 endloop3 = 0
 do_check = 0
+print("Getting Server Version")
+endloop4 = 0
+while (endloop4 < 1):
+    try:
+        address = serverip, serverport
+        info = a2s.info(address)
+    except TimeoutError:
+        info = False
+    if not info == False:
+        server_version = info.version
+        print("Done")
+        endloop4 = 1
 os.system(f"taskkill /f /im {process_name}")
 time.sleep(3)
 logfile = f"{gamedir}\\{logfilename}"
@@ -58,6 +70,7 @@ while (endloop3 < 1):
     if do_check == 1:
         maxlinescon = consolelogger.getmaxlines(logfile)
         if maxlinescon >= 5000:
+            print("RESET GAME")
             # RESET GAME AND LOGS BREAK
             os.system(f"taskkill /f /im {process_name}")
             while(fileinuse_functions.is_file_in_use(logfile) == True):
@@ -66,6 +79,7 @@ while (endloop3 < 1):
             consolelogger.logstart(gamedir, logfilename)
             lastmodtime = os.path.getmtime(logfile)
             start_game(gamedir, logfilename, appid, process_name)
+            source_functions.set_focus(process_name)
             lastmodtime = os.path.getmtime(logfile)
             conlist = consolelogger.consolelog(gamedir, logfilename)
             nextline = conlist[-1]
@@ -75,6 +89,22 @@ while (endloop3 < 1):
 
     if not info == False:
         print("server up")
+        if not info.version == server_version:
+            print("RESET GAME")
+            # RESET GAME AND LOGS BREAK
+            os.system(f"taskkill /f /im {process_name}")
+            while(fileinuse_functions.is_file_in_use(logfile) == True):
+                pass
+            time.sleep(5)
+            consolelogger.logstart(gamedir, logfilename)
+            lastmodtime = os.path.getmtime(logfile)
+            start_game(gamedir, logfilename, appid, process_name)
+            source_functions.set_focus(process_name)
+            lastmodtime = os.path.getmtime(logfile)
+            conlist = consolelogger.consolelog(gamedir, logfilename)
+            nextline = conlist[-1]
+            inserver = 0
+            
         if info.player_count >= info.max_players:
             print("Server is full")
             inserver = 0
@@ -114,6 +144,7 @@ while (endloop3 < 1):
                         pydirectinput.press("enter")
                         source_functions.move_demos(gamedir, demosdirname)
                         inserver = 0
+                        print("RESET GAME")
                         # RESET GAME AND LOGS BREAK
                         os.system(f"taskkill /f /im {process_name}")
                         while(fileinuse_functions.is_file_in_use(logfile) == True):

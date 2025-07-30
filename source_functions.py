@@ -101,6 +101,7 @@ def start_game(gamedir, logfilename, appid, process_name):
     endloop2 = 0
     os.system(f"taskkill /f /im {process_name}")
     time.sleep(3)
+    print(f"Starting AppID: {appid}")
     os.system(f"start steam://rungameid/{appid}")
     print("wait")
     while (endloop1 < 1):
