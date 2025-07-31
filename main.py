@@ -41,13 +41,14 @@ endloop4 = 0
 while (endloop4 < 1):
     try:
         address = serverip, serverport
-        infover = a2s.info(address)
+        info = a2s.info(address)
     except TimeoutError:
         info = False
-    if not infover == False:
-        server_version = infover.version
+    if not info == False:
+        server_version = info.version
         print("Done")
         endloop4 = 1
+        info = False
 os.system(f"taskkill /f /im {process_name}")
 time.sleep(3)
 logfile = f"{gamedir}\\{logfilename}"
