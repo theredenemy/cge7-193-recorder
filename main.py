@@ -50,6 +50,7 @@ while (endloop4 < 1):
         endloop4 = 1
         info = False
 os.system(f"taskkill /f /im {process_name}")
+info = False
 time.sleep(3)
 logfile = f"{gamedir}\\{logfilename}"
 consolelogger.logstart(gamedir, logfilename)
