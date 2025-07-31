@@ -5,7 +5,8 @@ from config_defaults import (
     serverport_default,
     demosdirname_default,
     appid_default,
-    process_name_default
+    process_name_default,
+    server_version_default
 )
 
 
@@ -26,6 +27,7 @@ def makeConfig():
   config_file.set("SOURCETV", "demosdirname", demosdirname_default)
   config_file.set("SOURCETV", "appid", appid_default)
   config_file.set("SOURCETV", "process_name", process_name_default)
+  config_file.set("SOURCETV", "server_version", server_version_default)
 
   with open(r"SOURCETV.ini", 'w') as configfileObj:
      config_file.write(configfileObj)

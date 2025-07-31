@@ -16,7 +16,8 @@ from config_defaults import (
     serverport_default,
     demosdirname_default,
     appid_default,
-    process_name_default
+    process_name_default,
+    server_version_default
 )
 from source_functions import start_game
 pydirectinput.FAILSAFE = False
@@ -32,23 +33,25 @@ serverport = configHelper.read_config(config, "SOURCETV", "serverport", serverpo
 demosdirname = configHelper.read_config(config, "SOURCETV", "demosdirname", demosdirname_default)
 appid = configHelper.read_config(config, "SOURCETV", "appid", appid_default)
 process_name = configHelper.read_config(config, "SOURCETV", "process_name", process_name_default)
+server_version = configHelper.read_config(config, "SOURCETV", "server_version", server_version_default)
 endloop1 = 0
 endloop2 = 0
 endloop3 = 0
 do_check = 0
-print("Getting Server Version")
-endloop4 = 0
-while (endloop4 < 1):
-    try:
-        address = serverip, serverport
-        info = a2s.info(address)
-    except TimeoutError:
-        info = False
-    if not info == False:
-        server_version = info.version
-        print("Done")
-        endloop4 = 1
-        info = False
+if server_version == "None":
+    print("Getting Server Version")
+    endloop4 = 0
+    while (endloop4 < 1):
+        try:
+            address = serverip, serverport
+            info = a2s.info(address)
+        except TimeoutError:
+            info = False
+        if not info == False:
+            server_version = info.version
+            print("Done")
+            endloop4 = 1
+            info = False
 os.system(f"taskkill /f /im {process_name}")
 info = False
 time.sleep(3)
