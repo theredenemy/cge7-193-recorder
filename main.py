@@ -8,6 +8,7 @@ import source_functions
 import listfindlib
 import fileinuse_functions
 import configHelper
+import configparser
 from makeConfig import makeConfig
 from config_defaults import (
     gamedir_default,
@@ -22,24 +23,26 @@ from config_defaults import (
 from source_functions import start_game
 pydirectinput.FAILSAFE = False
 pyautogui.FAILSAFE = False
+config = configparser.ConfigParser()
 # Start of Script
 if os.path.isfile("SOURCETV.ini") == False:
     makeConfig()
-config = "SOURCETV.ini"
-gamedir = configHelper.read_config(config, "SOURCETV", "gamedir", gamedir_default)
-logfilename = configHelper.read_config(config, "SOURCETV", "logfilename", logfilename_default)
-serverip = configHelper.read_config(config, "SOURCETV", "serverip", serverip_default)
-serverport = configHelper.read_config(config, "SOURCETV", "serverport", serverport_default, True)
-demosdirname = configHelper.read_config(config, "SOURCETV", "demosdirname", demosdirname_default)
-appid = configHelper.read_config(config, "SOURCETV", "appid", appid_default)
-process_name = configHelper.read_config(config, "SOURCETV", "process_name", process_name_default)
-server_version = configHelper.read_config(config, "SOURCETV", "server_version", server_version_default)
+configfile = "SOURCETV.ini"
+gamedir = configHelper.read_config(configfile, "SOURCETV", "gamedir", gamedir_default)
+logfilename = configHelper.read_config(configfile, "SOURCETV", "logfilename", logfilename_default)
+serverip = configHelper.read_config(configfile, "SOURCETV", "serverip", serverip_default)
+serverport = configHelper.read_config(configfile, "SOURCETV", "serverport", serverport_default, True)
+demosdirname = configHelper.read_config(configfile, "SOURCETV", "demosdirname", demosdirname_default)
+appid = configHelper.read_config(configfile, "SOURCETV", "appid", appid_default)
+process_name = configHelper.read_config(configfile, "SOURCETV", "process_name", process_name_default)
+server_version = configHelper.read_config(configfile, "SOURCETV", "server_version", server_version_default)
 endloop1 = 0
 endloop2 = 0
 endloop3 = 0
 do_check = 0
+print("Getting Server Version")
 if server_version == "None":
-    print("Getting Server Version")
+    print(f"Fetching Server Version From Server: {serverip}:{serverport}")
     endloop4 = 0
     while (endloop4 < 1):
         try:
@@ -49,6 +52,10 @@ if server_version == "None":
             info = False
         if not info == False:
             server_version = info.version
+            config.read(configfile)
+            config.set("SOURCETV", "server_version", server_version)
+            with open(configfile, 'w') as f:
+                config.write(f)
             print("Done")
             endloop4 = 1
             info = False
@@ -65,18 +72,6 @@ start_game(gamedir, logfilename, appid, process_name)
 lastmodtime = os.path.getmtime(logfile)
 conlist = consolelogger.consolelog(gamedir, logfilename)
 nextline = conlist[-1]
-print("Getting Server Version")
-while (endloop4 < 1):
-    try:
-        address = serverip, serverport
-        info = a2s.info(address)
-    except TimeoutError:
-        info = False
-    if not info == False:
-        server_version = info.version
-        print("Done")
-        endloop4 = 1
-        info = False
 while (endloop3 < 1):
     time.sleep(3)
     try:
@@ -109,6 +104,10 @@ while (endloop3 < 1):
         if not info.version == server_version:
             print("RESET GAME")
             server_version = info.version
+            config.read(configfile)
+            config.set("SOURCETV", "server_version", server_version)
+            with open(configfile, 'w') as f:
+                config.write(f)
             # RESET GAME AND LOGS BREAK
             os.system(f"taskkill /f /im {process_name}")
             while(fileinuse_functions.is_file_in_use(logfile) == True):
@@ -163,7 +162,23 @@ while (endloop3 < 1):
                         source_functions.move_demos(gamedir, demosdirname)
                         inserver = 0
                         print("RESET GAME")
-                        server_version = info.version
+                        print(f"Fetching Server Version From Server: {serverip}:{serverport}")
+                        endloop4 = 0
+                        while (endloop4 < 1):
+                            try:
+                                address = serverip, serverport
+                                info = a2s.info(address)
+                            except TimeoutError:
+                                info = False
+                            if not info == False:
+                                server_version = info.version
+                                config.read(configfile)
+                                config.set("SOURCETV", "server_version", server_version)
+                                with open(configfile, 'w') as f:
+                                    config.write(f)
+                                print("Done")
+                                endloop4 = 1
+                                info = False
                         # RESET GAME AND LOGS BREAK
                         os.system(f"taskkill /f /im {process_name}")
                         while(fileinuse_functions.is_file_in_use(logfile) == True):
