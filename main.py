@@ -36,19 +36,7 @@ endloop1 = 0
 endloop2 = 0
 endloop3 = 0
 do_check = 0
-print("Getting Server Version")
 endloop4 = 0
-while (endloop4 < 1):
-    try:
-        address = serverip, serverport
-        info = a2s.info(address)
-    except TimeoutError:
-        info = False
-    if not info == False:
-        server_version = info.version
-        print("Done")
-        endloop4 = 1
-        info = False
 os.system(f"taskkill /f /im {process_name}")
 info = False
 time.sleep(3)
@@ -62,6 +50,18 @@ start_game(gamedir, logfilename, appid, process_name)
 lastmodtime = os.path.getmtime(logfile)
 conlist = consolelogger.consolelog(gamedir, logfilename)
 nextline = conlist[-1]
+print("Getting Server Version")
+while (endloop4 < 1):
+    try:
+        address = serverip, serverport
+        info = a2s.info(address)
+    except TimeoutError:
+        info = False
+    if not info == False:
+        server_version = info.version
+        print("Done")
+        endloop4 = 1
+        info = False
 while (endloop3 < 1):
     time.sleep(3)
     try:
