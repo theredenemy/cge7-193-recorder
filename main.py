@@ -36,6 +36,7 @@ endloop1 = 0
 endloop2 = 0
 endloop3 = 0
 do_check = 0
+print("Getting Server Version")
 endloop4 = 0
 while (endloop4 < 1):
     try:
