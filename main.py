@@ -37,8 +37,8 @@ endloop2 = 0
 endloop3 = 0
 do_check = 0
 endloop4 = 0
+server_version = None
 os.system(f"taskkill /f /im {process_name}")
-info = False
 time.sleep(3)
 logfile = f"{gamedir}\\{logfilename}"
 consolelogger.logstart(gamedir, logfilename)
@@ -50,18 +50,6 @@ start_game(gamedir, logfilename, appid, process_name)
 lastmodtime = os.path.getmtime(logfile)
 conlist = consolelogger.consolelog(gamedir, logfilename)
 nextline = conlist[-1]
-print("Getting Server Version")
-while (endloop4 < 1):
-    try:
-        address = serverip, serverport
-        info = a2s.info(address)
-    except TimeoutError:
-        info = False
-    if not info == False:
-        server_version = info.version
-        print("Done")
-        endloop4 = 1
-        info = False
 while (endloop3 < 1):
     time.sleep(3)
     try:
@@ -91,9 +79,13 @@ while (endloop3 < 1):
 
     if not info == False:
         print("server up")
+        if server_version == None:
+            print("Setting Server Version")
+            server_version = info.version
+            print("Done")
+              
         if not info.version == server_version:
             print("RESET GAME")
-            server_version = info.version
             # RESET GAME AND LOGS BREAK
             os.system(f"taskkill /f /im {process_name}")
             while(fileinuse_functions.is_file_in_use(logfile) == True):
@@ -107,6 +99,10 @@ while (endloop3 < 1):
             conlist = consolelogger.consolelog(gamedir, logfilename)
             nextline = conlist[-1]
             inserver = 0
+            print("Setting Server Version")
+            server_version = info.version
+            print("Done")
+            
             
         if info.player_count >= info.max_players:
             print("Server is full")
@@ -148,7 +144,6 @@ while (endloop3 < 1):
                         source_functions.move_demos(gamedir, demosdirname)
                         inserver = 0
                         print("RESET GAME")
-                        server_version = info.version
                         # RESET GAME AND LOGS BREAK
                         os.system(f"taskkill /f /im {process_name}")
                         while(fileinuse_functions.is_file_in_use(logfile) == True):
@@ -162,6 +157,9 @@ while (endloop3 < 1):
                         conlist = consolelogger.consolelog(gamedir, logfilename)
                         nextline = conlist[-1]
                         inserver = 0
+                        print("Setting Server Version")
+                        server_version = info.version
+                        print("Done")
                     
                     
                 if listfindlib.findtext(conlist, "Disconnect") == True:
