@@ -41,11 +41,11 @@ endloop4 = 0
 while (endloop4 < 1):
     try:
         address = serverip, serverport
-        info = a2s.info(address)
+        infover = a2s.info(address)
     except TimeoutError:
         info = False
-    if not info == False:
-        server_version = info.version
+    if not infover == False:
+        server_version = infover.version
         print("Done")
         endloop4 = 1
 os.system(f"taskkill /f /im {process_name}")
