@@ -127,6 +127,7 @@ while (endloop3 < 1):
         if info.player_count >= info.max_players:
             print("Server is full")
             inserver = 0
+            continue
         else:
             print(f"join {serverip}:{serverport}")
             source_functions.set_focus(process_name)
