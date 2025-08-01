@@ -121,6 +121,8 @@ while (endloop3 < 1):
             conlist = consolelogger.consolelog(gamedir, logfilename)
             nextline = conlist[-1]
             inserver = 0
+            continue
+            
             
         if info.player_count >= info.max_players:
             print("Server is full")
@@ -130,6 +132,8 @@ while (endloop3 < 1):
             source_functions.set_focus(process_name)
             source_functions.run_cmd(f"connect {serverip}:{serverport}")
             inserver = 1
+        
+        
         while (inserver >= 1):
             if not lastmodtime == os.path.getmtime(logfile):
                 conlist = consolelogger.consolelog(gamedir, logfilename, nextline)
