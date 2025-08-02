@@ -1,7 +1,7 @@
 import configparser
 import os
 
-def read_config(configfile, section, option, default_value, is_int=False):
+def read_config(configfile, section, option, default_value=0, is_int=False):
     config = configparser.ConfigParser()
     if os.path.isfile(configfile) == False:
         config.add_section(section)
