@@ -50,8 +50,8 @@ if server_version == "None":
         try:
             address = serverip, serverport
             info = a2s.info(address)
-        except Exception:
-            if not TimeoutError:
+        except Exception as e:
+            if not type(e).__name__ == "TimeoutError":
                 error = traceback.format_exc()
                 print(error)
             info = False
@@ -82,8 +82,8 @@ while (endloop3 < 1):
     try:
         address = serverip, serverport
         info = a2s.info(address)
-    except Exception:
-        if not TimeoutError:
+    except Exception as e:
+        if not type(e).__name__ == "TimeoutError":
             error = traceback.format_exc()
             print(error)
         info = False
@@ -181,8 +181,8 @@ while (endloop3 < 1):
                             try:
                                 address = serverip, serverport
                                 info = a2s.info(address)
-                            except Exception:
-                                if not TimeoutError:
+                            except Exception as e:
+                                if not type(e).__name__ == "TimeoutError":
                                     error = traceback.format_exc()
                                     print(error)
                                 info = False

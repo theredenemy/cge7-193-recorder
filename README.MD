@@ -23,4 +23,4 @@ it should be under demo support in advanced options
 
 If you Run into any issues please leave a GitHub issue
 
-if you have tf2 installed in a different directory modify the gamedir variable in main.py
+if you have tf2 installed in a different directory modify the gamedir variable in SOURCETV.ini
