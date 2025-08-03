@@ -9,6 +9,8 @@ import listfindlib
 import fileinuse_functions
 import configHelper
 import configparser
+import traceback
+import sys
 from makeConfig import makeConfig
 from config_defaults import (
     gamedir_default,
@@ -48,7 +50,10 @@ if server_version == "None":
         try:
             address = serverip, serverport
             info = a2s.info(address)
-        except TimeoutError:
+        except TimeoutError or ConnectionResetError or Exception:
+            if not TimeoutError:
+                error = traceback.format_exc()
+                print(error)
             info = False
         if not info == False:
             server_version = info.version
@@ -77,7 +82,10 @@ while (endloop3 < 1):
     try:
         address = serverip, serverport
         info = a2s.info(address)
-    except TimeoutError:
+    except TimeoutError or ConnectionResetError or Exception:
+        if not TimeoutError:
+            error = traceback.format_exc()
+            print(error)
         info = False
     if do_check == 1:
         maxlinescon = consolelogger.getmaxlines(logfile)
@@ -173,7 +181,10 @@ while (endloop3 < 1):
                             try:
                                 address = serverip, serverport
                                 info = a2s.info(address)
-                            except TimeoutError:
+                            except TimeoutError or ConnectionResetError or Exception:
+                                if not TimeoutError:
+                                    error = traceback.format_exc()
+                                    print(error)
                                 info = False
                             if not info == False:
                                 server_version = info.version
