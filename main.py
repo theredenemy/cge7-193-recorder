@@ -150,7 +150,7 @@ while (endloop3 < 1):
                 lastmodtime = os.path.getmtime(logfile)
                 if "Connection failed after 4 retries" in conlist:
                     print("FUCK")
-                    time.sleep(3)
+                    time.sleep(5)
                     source_functions.set_focus(process_name)
                     pydirectinput.press("enter")
                     pydirectinput.press("enter")
