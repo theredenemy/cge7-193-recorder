@@ -78,7 +78,7 @@ lastmodtime = os.path.getmtime(logfile)
 conlist = consolelogger.consolelog(gamedir, logfilename)
 nextline = conlist[-1]
 while (endloop3 < 1):
-    time.sleep(3)
+    time.sleep(5)
     try:
         address = serverip, serverport
         info = a2s.info(address)
