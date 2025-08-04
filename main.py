@@ -51,10 +51,10 @@ if server_version == "None":
             address = serverip, serverport
             info = a2s.info(address)
         except Exception as e:
-            if not type(e).__name__ == "TimeoutError" or not type(e).__name__ == "ConnectionResetError":
+            if not type(e).__name__ == "TimeoutError":
                 error = traceback.format_exc()
                 print(error)
-            if type(e).__name__ == "ConnectionResetError":
+            elif type(e).__name__ == "ConnectionResetError":
                 print("ConnectionReset") 
             info = False
         if not info == False:
@@ -85,10 +85,10 @@ while (endloop3 < 1):
         address = serverip, serverport
         info = a2s.info(address)
     except Exception as e:
-        if not type(e).__name__ == "TimeoutError" or not type(e).__name__ == "ConnectionResetError":
+        if not type(e).__name__ == "TimeoutError":
             error = traceback.format_exc()
             print(error)
-        if type(e).__name__ == "ConnectionResetError":
+        elif type(e).__name__ == "ConnectionResetError":
             print("ConnectionReset")
         info = False
     if do_check == 1:
@@ -186,10 +186,10 @@ while (endloop3 < 1):
                                 address = serverip, serverport
                                 info = a2s.info(address)
                             except Exception as e:
-                                if not type(e).__name__ == "TimeoutError" or not type(e).__name__ == "ConnectionResetError":
+                                if not type(e).__name__ == "TimeoutError":
                                     error = traceback.format_exc()
                                     print(error)
-                                if type(e).__name__ == "ConnectionResetError":
+                                elif type(e).__name__ == "ConnectionResetError":
                                     print("ConnectionReset")
                                 info = False
                             if not info == False:
