@@ -52,10 +52,11 @@ if server_version == "None":
             info = a2s.info(address)
         except Exception as e:
             if not type(e).__name__ == "TimeoutError":
+                if type(e).__name__ == "ConnectionResetError":
+                    print("ConnectionReset")
+                    continue
                 error = traceback.format_exc()
                 print(error)
-            elif type(e).__name__ == "ConnectionResetError":
-                print("ConnectionReset") 
             info = False
         if not info == False:
             server_version = info.version
@@ -86,10 +87,12 @@ while (endloop3 < 1):
         info = a2s.info(address)
     except Exception as e:
         if not type(e).__name__ == "TimeoutError":
+            if type(e).__name__ == "ConnectionResetError":
+                print("ConnectionReset")
+                continue
             error = traceback.format_exc()
             print(error)
-        elif type(e).__name__ == "ConnectionResetError":
-            print("ConnectionReset")
+        
         info = False
     if do_check == 1:
         maxlinescon = consolelogger.getmaxlines(logfile)
@@ -187,10 +190,11 @@ while (endloop3 < 1):
                                 info = a2s.info(address)
                             except Exception as e:
                                 if not type(e).__name__ == "TimeoutError":
+                                    if type(e).__name__ == "ConnectionResetError":
+                                        print("ConnectionReset")
+                                        continue
                                     error = traceback.format_exc()
                                     print(error)
-                                elif type(e).__name__ == "ConnectionResetError":
-                                    print("ConnectionReset")
                                 info = False
                             if not info == False:
                                 server_version = info.version
