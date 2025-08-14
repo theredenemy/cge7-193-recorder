@@ -119,6 +119,41 @@ def start_game(gamedir, logfilename, appid, process_name):
             conlist = consolelogger.consolelog(gamedir, logfilename, nextline)
             nextline = conlist[-1]
             lastmodtime = os.path.getmtime(logfile)
+
+def connect_to_server(server_ip, server_port, source_tv=True):
+    import socket
+    import ipaddress
+    import a2s
+    import traceback
+    try:
+        if ipaddress.ip_address(server_ip):
+            ip = server_ip
+    except ValueError:
+        try:
+            ip = socket.gethostbyname(server_ip)
+        except socket.gaierror:
+            return False
+    try:
+        address = ip, server_port
+        info = a2s.info(address)
+    except Exception as e:
+        if not type(e).__name__ == "TimeoutError":
+            if type(e).__name__ == "ConnectionResetError":
+                print("ConnectionReset")
+                return False
+            error = traceback.format_exc()
+            print(error)
+        return False
+    port = info.stv_port
+    print(f"join {ip}:{port}")
+    run_cmd(f"connect {ip}:{port}")
+    return True
+    
+        
+        
+      
+    
+    
     
     
 
