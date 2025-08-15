@@ -1,5 +1,3 @@
-import ipaddress
-import socket
 import pyautogui
 import pydirectinput
 import os
@@ -44,17 +42,9 @@ endloop1 = 0
 endloop2 = 0
 endloop3 = 0
 do_check = 0
-try:
-    if ipaddress.ip_address(serverip):
-        ip = serverip
-except ValueError:
-    try:
-        ip = socket.gethostbyname(serverip)
-    except socket.gaierror:
-        ip = serverip
 print("Getting Server Version")
 if server_version == "None":
-    print(f"Fetching Server Version From Server: {ip}:{serverport}")
+    print(f"Fetching Server Version From Server: {serverip}:{serverport}")
     endloop4 = 0
     while (endloop4 < 1):
         try:
@@ -154,14 +144,10 @@ while (endloop3 < 1):
             inserver = 0
             continue
         else:
+            print(f"join {serverip}:{serverport}")
             source_functions.set_focus(process_name)
-            server_join = source_functions.connect_to_server(server_ip=serverip, server_port=serverport, source_tv=True)
-            if server_join == True:
-                inserver = 1
-            else:
-                print("server is down")
-                inserver = 0
-                continue
+            source_functions.run_cmd(f"connect {serverip}:{serverport}")
+            inserver = 1
         
         
         while (inserver >= 1):
