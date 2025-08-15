@@ -1,10 +1,7 @@
 import consolelogger
 import processchecklib
-
-
 import os
 import time
-
 
 def run_cmd(cmd):
     import os
