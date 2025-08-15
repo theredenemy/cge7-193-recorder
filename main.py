@@ -11,7 +11,6 @@ import listfindlib
 import fileinuse_functions
 import configHelper
 import configparser
-# temp
 import traceback
 import sys
 from makeConfig import makeConfig
