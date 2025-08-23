@@ -1,3 +1,4 @@
+# cge7-193-recorder : consolelogger.py Copyright (C) 2025  TheRedEnemy
 import time
 import os
 import shutil
