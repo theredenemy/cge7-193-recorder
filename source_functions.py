@@ -1,3 +1,4 @@
+# cge7-193-recorder : source_functions.py Copyright (C) 2025  TheRedEnemy
 import consolelogger
 import processchecklib
 import os

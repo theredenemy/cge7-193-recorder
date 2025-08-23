@@ -1,3 +1,4 @@
+# cge7-193-recorder : main.py Copyright (C) 2025  TheRedEnemy
 import ipaddress
 import socket
 import pyautogui
