@@ -70,9 +70,10 @@ def consolelog(gamedir, logfilename, startline=1):
 if __name__ == '__main__':
     if os.path.isfile("SOURCETV.ini") == True:
         import configHelper
-        config = configHelper.read_config('SOURCETV.ini')
-        gamedir = config['SOURCETV']['gamedir']
-        logfilename = config['SOURCETV']['logfilename']
+        from config_defaults import *
+        configfile = "SOURCETV.ini"
+        gamedir = configHelper.read_config(configfile, "SOURCETV", "gamedir", gamedir_default)
+        logfilename = configHelper.read_config(configfile, "SOURCETV", "logfilename", logfilename_default)
         data = consolelog(gamedir, logfilename)
         print(data)
     

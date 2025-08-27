@@ -142,7 +142,12 @@ def connect_to_server(server_ip, server_port, source_tv=True):
             error = traceback.format_exc()
             print(error)
         return False
-    port = info.stv_port
+    if source_tv == True:
+        port = info.stv_port
+        if port == None:
+            return False
+    else:
+        port = server_port
     print(f"join {ip}:{port}")
     run_cmd(f"connect {ip}:{port}")
     return True
