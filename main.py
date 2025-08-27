@@ -147,9 +147,9 @@ while (endloop3 < 1):
         
         while (inserver >= 1):
             if not lastmodtime == os.path.getmtime(logfile):
+                lastmodtime = os.path.getmtime(logfile)
                 conlist = consolelogger.consolelog(gamedir, logfilename, nextline)
                 nextline = conlist[-1]
-                lastmodtime = os.path.getmtime(logfile)
                 if "Connection failed after 4 retries" in conlist:
                     print("FUCK")
                     time.sleep(5)
