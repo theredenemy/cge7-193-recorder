@@ -146,6 +146,25 @@ def connect_to_server(server_ip, server_port, source_tv=True):
     print(f"join {ip}:{port}")
     run_cmd(f"connect {ip}:{port}")
     return True
+
+def reset_game(gamedir, logfilename, appid, process_name, logfile):
+    import fileinuse_functions
+    import __main__
+    global inserver
+    # RESET GAME AND LOGS BREAK
+    os.system(f"taskkill /f /im {process_name}")
+    while(fileinuse_functions.is_file_in_use(logfile) == True):
+        pass
+    time.sleep(5)
+    consolelogger.logstart(gamedir, logfilename)
+    lastmodtime = os.path.getmtime(logfile)
+    start_game(gamedir, logfilename, appid, process_name)
+    set_focus(process_name)
+    __main__.lastmodtime = os.path.getmtime(logfile)
+    conlist = consolelogger.consolelog(gamedir, logfilename)
+    __main__.nextline = conlist[-1]
+    __main__.inserver = 0
+    
     
         
         

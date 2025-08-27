@@ -45,6 +45,7 @@ endloop1 = 0
 endloop2 = 0
 endloop3 = 0
 do_check = 0
+
 try:
     if ipaddress.ip_address(serverip):
         ip = serverip
@@ -109,18 +110,7 @@ while (endloop3 < 1):
         maxlinescon = consolelogger.getmaxlines(logfile)
         if maxlinescon >= 5000:
             print("RESET GAME")
-            # RESET GAME AND LOGS BREAK
-            os.system(f"taskkill /f /im {process_name}")
-            while(fileinuse_functions.is_file_in_use(logfile) == True):
-                pass
-            time.sleep(5)
-            consolelogger.logstart(gamedir, logfilename)
-            lastmodtime = os.path.getmtime(logfile)
-            start_game(gamedir, logfilename, appid, process_name)
-            source_functions.set_focus(process_name)
-            lastmodtime = os.path.getmtime(logfile)
-            conlist = consolelogger.consolelog(gamedir, logfilename)
-            nextline = conlist[-1]
+            source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
             do_check = 0
         else:
             do_check = 0
@@ -135,17 +125,7 @@ while (endloop3 < 1):
             with open(configfile, 'w') as f:
                 config.write(f)
             # RESET GAME AND LOGS BREAK
-            os.system(f"taskkill /f /im {process_name}")
-            while(fileinuse_functions.is_file_in_use(logfile) == True):
-                pass
-            time.sleep(5)
-            consolelogger.logstart(gamedir, logfilename)
-            lastmodtime = os.path.getmtime(logfile)
-            start_game(gamedir, logfilename, appid, process_name)
-            source_functions.set_focus(process_name)
-            lastmodtime = os.path.getmtime(logfile)
-            conlist = consolelogger.consolelog(gamedir, logfilename)
-            nextline = conlist[-1]
+            source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
             inserver = 0
             continue
             
@@ -220,18 +200,7 @@ while (endloop3 < 1):
                                 print("Done")
                                 endloop4 = 1
                                 info = False
-                        # RESET GAME AND LOGS BREAK
-                        os.system(f"taskkill /f /im {process_name}")
-                        while(fileinuse_functions.is_file_in_use(logfile) == True):
-                            pass
-                        time.sleep(5)
-                        consolelogger.logstart(gamedir, logfilename)
-                        lastmodtime = os.path.getmtime(logfile)
-                        start_game(gamedir, logfilename, appid, process_name)
-                        source_functions.set_focus(process_name)
-                        lastmodtime = os.path.getmtime(logfile)
-                        conlist = consolelogger.consolelog(gamedir, logfilename)
-                        nextline = conlist[-1]
+                        source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
                         inserver = 0
                     
                     
