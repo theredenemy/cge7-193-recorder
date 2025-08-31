@@ -226,7 +226,7 @@ while (endloop3 < 1):
                             time.sleep(2)
                             pydirectinput.press("enter")
                             pydirectinput.press("enter")
-                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; hideconsole")
+                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
                             source_functions.move_demos(gamedir, demosdirname)
                             inserver = 0
                             do_check = 1
