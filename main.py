@@ -246,8 +246,7 @@ while (endloop3 < 1):
                     if listfindlib.findtext(conlist, "hello") == True:
                         source_functions.chat("hello")
                     
-                    print(f"{nextline} : {i}", end='\r')
-                print(f"{nextline} : {i}", end='\r')
+                    print(f"{conlist[-1]} : {i}", end='\r')
                 nextline = conlist[-1]
                 
 
