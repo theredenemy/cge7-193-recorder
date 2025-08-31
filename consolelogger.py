@@ -75,5 +75,6 @@ if __name__ == '__main__':
         gamedir = configHelper.read_config(configfile, "SOURCETV", "gamedir", gamedir_default)
         logfilename = configHelper.read_config(configfile, "SOURCETV", "logfilename", logfilename_default)
         data = consolelog(gamedir, logfilename)
+        print(data[-1])
         print(data)
     
