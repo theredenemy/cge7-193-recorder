@@ -38,7 +38,9 @@ def move_demos(gamedir, demosdirname):
     import time
     import shutil
     import pathlib
+    print("\nMoving Demos")
     maindir = os.getcwd()
+    demosint = 0
     demofilesdirname = "demofiles"
     allowed_extensions = ['.dem', '.json']
     demosdir = os.path.join(gamedir, demosdirname)
@@ -54,6 +56,8 @@ def move_demos(gamedir, demosdirname):
             filepath = f"{demosdir}\\{filename}"
             if os.path.isfile(filepath) == True:
                 fileext = pathlib.Path(filepath).suffix
+                if fileext == ".dem":
+                    demosint += 1
                 if fileext in allowed_extensions:
                     file_time = os.path.getctime(filepath)
                     file_ti_c = time.ctime(file_time)
@@ -74,6 +78,8 @@ def move_demos(gamedir, demosdirname):
                     print(f"skip {filename}")
     else:
         print("nope")
+    print(f"Done Moving Demos: {demosint} New Demos")
+    
                     
 def get_pid(process_name):
     import psutil
@@ -86,18 +92,29 @@ def get_pid(process_name):
 
 def set_focus(process_name):
     from pywinauto import Application
+    import time
     pid = get_pid(process_name)
-    app = Application().connect(process=pid)
-    app.top_window().set_focus()
+    endloop = 0
+    while (endloop <= 0):
+        try:
+            app = Application().connect(process=pid)
+            app.top_window().set_focus()
+            endloop = 1
+        except RuntimeError:
+            print("Game Not Responding")
+            time.sleep(3)
 
 
 def start_game(gamedir, logfilename, appid, process_name):
+    import fileinuse_functions
     logfile = f"{gamedir}\\{logfilename}"
+    os.system(f"taskkill /f /im {process_name}")
+    while(fileinuse_functions.is_file_in_use(logfile) == True):
+        pass
     consolelogger.logstart(gamedir, logfilename)
     lastmodtime = os.path.getmtime(logfile)
     endloop1 = 0
     endloop2 = 0
-    os.system(f"taskkill /f /im {process_name}")
     time.sleep(3)
     print(f"Starting AppID: {appid}")
     os.system(f"start steam://rungameid/{appid}")
@@ -149,7 +166,7 @@ def connect_to_server(server_ip, server_port, source_tv=True):
     else:
         port = server_port
     print(f"join {ip}:{port}")
-    run_cmd(f"connect {ip}:{port}")
+    run_cmd(f"echo 1; echo 2; echo 3; echo 4; connect {ip}:{port}")
     return True
 
 def reset_game(gamedir, logfilename, appid, process_name, logfile):

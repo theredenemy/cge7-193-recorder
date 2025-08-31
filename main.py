@@ -45,6 +45,8 @@ endloop1 = 0
 endloop2 = 0
 endloop3 = 0
 do_check = 0
+nextlinelook = 0
+nextline = 0
 
 try:
     if ipaddress.ip_address(serverip):
@@ -83,6 +85,8 @@ os.system(f"taskkill /f /im {process_name}")
 info = False
 time.sleep(3)
 logfile = f"{gamedir}\\{logfilename}"
+while(fileinuse_functions.is_file_in_use(logfile) == True):
+    pass
 consolelogger.logstart(gamedir, logfilename)
 lastmodtime = os.path.getmtime(logfile)
 time.sleep(3)
@@ -146,89 +150,105 @@ while (endloop3 < 1):
         
         
         while (inserver >= 1):
+            if not nextline == nextlinelook:
+                print(nextline, end='\r')
+                nextlinelook = nextline
             if not lastmodtime == os.path.getmtime(logfile):
                 lastmodtime = os.path.getmtime(logfile)
-                conlist = consolelogger.consolelog(gamedir, logfilename, nextline)
-                nextline = conlist[-1]
-                if "Connection failed after 4 retries" in conlist:
-                    print("FUCK")
-                    time.sleep(5)
-                    source_functions.set_focus(process_name)
-                    pydirectinput.press("enter")
-                    pydirectinput.press("enter")
-                    inserver = 0
-                    do_check = 1
-                if "Server is full" in conlist:
-                    print("Server is full")
-                    time.sleep(3)
-                    source_functions.set_focus(process_name)
-                    pydirectinput.press("enter")
-                    pydirectinput.press("enter")
-                    inserver = 0
-                    do_check = 1
-                if "The server you are trying to connect to is running" in conlist:
-                    time.sleep(2)
-                    source_functions.run_cmd("echo in-server")
-                    if listfindlib.findtext(conlist, "in-server") == False:
+                time.sleep(3)
+                for i in range(5):
+                    time.sleep(1)
+                    conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+                    if "Connection failed after 4 retries" in conlist:
+                        print("\nDisconnect")
+                        print("FUCK")
+                        time.sleep(5)
                         source_functions.set_focus(process_name)
-                        time.sleep(2)
                         pydirectinput.press("enter")
                         pydirectinput.press("enter")
-                        source_functions.move_demos(gamedir, demosdirname)
                         inserver = 0
-                        print("RESET GAME")
-                        print(f"Fetching Server Version From Server: {serverip}:{serverport}")
-                        endloop4 = 0
-                        while (endloop4 < 1):
-                            try:
-                                address = serverip, serverport
-                                info = a2s.info(address)
-                            except Exception as e:
-                                if not type(e).__name__ == "TimeoutError":
-                                    if type(e).__name__ == "ConnectionResetError":
-                                        print("ConnectionReset")
-                                        continue
-                                    error = traceback.format_exc()
-                                    print(error)
-                                info = False
-                            if not info == False:
-                                server_version = info.version
-                                config.read(configfile)
-                                config.set("SOURCETV", "server_version", server_version)
-                                with open(configfile, 'w') as f:
-                                    config.write(f)
-                                print("Done")
-                                endloop4 = 1
-                                info = False
-                        source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
-                        inserver = 0
-                    
-                    
-                if listfindlib.findtext(conlist, "Disconnect") == True:
-                    time.sleep(2)
-                    source_functions.run_cmd("echo in-server")
-                    if listfindlib.findtext(conlist, "in-server") == False:
+                        do_check = 1
+                        break
+                    if "Server is full" in conlist:
+                        print("\nDisconnect")
+                        print("Server is full")
+                        time.sleep(3)
                         source_functions.set_focus(process_name)
+                        pydirectinput.press("enter")
+                        pydirectinput.press("enter")
+                        inserver = 0
+                        do_check = 1
+                        break
+                    if "The server you are trying to connect to is running" in conlist:
                         time.sleep(2)
+                        source_functions.run_cmd("echo in-server")
+                        if listfindlib.findtext(conlist, "in-server") == False:
+                            source_functions.set_focus(process_name)
+                            time.sleep(2)
+                            pydirectinput.press("enter")
+                            pydirectinput.press("enter")
+                            source_functions.move_demos(gamedir, demosdirname)
+                            inserver = 0
+                            print("RESET GAME")
+                            print(f"Fetching Server Version From Server: {serverip}:{serverport}")
+                            endloop4 = 0
+                            while (endloop4 < 1):
+                                try:
+                                    address = serverip, serverport
+                                    info = a2s.info(address)
+                                except Exception as e:
+                                    if not type(e).__name__ == "TimeoutError":
+                                        if type(e).__name__ == "ConnectionResetError":
+                                            print("ConnectionReset")
+                                            continue
+                                        error = traceback.format_exc()
+                                        print(error)
+                                    info = False
+                                if not info == False:
+                                    server_version = info.version
+                                    config.read(configfile)
+                                    config.set("SOURCETV", "server_version", server_version)
+                                    with open(configfile, 'w') as f:
+                                        config.write(f)
+                                    print("Done")
+                                    endloop4 = 1
+                                    info = False
+                            source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
+                            inserver = 0
+                            break
+                    
+                    
+                    if listfindlib.findtext(conlist, "Disconnect") == True:
+                        time.sleep(2)
+                        source_functions.run_cmd("echo in-server")
+                        if listfindlib.findtext(conlist, "in-server") == False:
+                            source_functions.set_focus(process_name)
+                            time.sleep(2)
+                            pydirectinput.press("enter")
+                            pydirectinput.press("enter")
+                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
+                            source_functions.move_demos(gamedir, demosdirname)
+                            inserver = 0
+                            do_check = 1
+                            break
+                        else:
+                            # what
+                            pydirectinput.press('esc')
+                    if "Server connection timed out" in conlist:
+                        print("FUCK")
+                        source_functions.set_focus(process_name)
+                        time.sleep(3)
                         pydirectinput.press("enter")
                         pydirectinput.press("enter")
                         source_functions.move_demos(gamedir, demosdirname)
                         inserver = 0
                         do_check = 1
-                    else:
-                        # what
-                        pydirectinput.press('esc')
-                if "Server connection timed out" in conlist:
-                    print("FUCK")
-                    source_functions.set_focus(process_name)
-                    time.sleep(3)
-                    pydirectinput.press("enter")
-                    pydirectinput.press("enter")
-                    source_functions.move_demos(gamedir, demosdirname)
-                    inserver = 0
-                    do_check = 1
-                if listfindlib.findtext(conlist, "hello") == True:
-                    source_functions.chat("hello")
+                        break
+                    if listfindlib.findtext(conlist, "hello") == True:
+                        source_functions.chat("hello")
+                    
+                    print(f"{conlist[-1]} : {i}", end='\r')
+                nextline = conlist[-1]
                 
 
 
