@@ -47,6 +47,7 @@ endloop3 = 0
 do_check = 0
 nextlinelook = 0
 nextline = 0
+mtime = 0
 
 try:
     if ipaddress.ip_address(serverip):
@@ -153,8 +154,9 @@ while (endloop3 < 1):
             if not nextline == nextlinelook:
                 print(nextline, end='\r')
                 nextlinelook = nextline
-            if not lastmodtime == os.path.getmtime(logfile):
-                lastmodtime = os.path.getmtime(logfile)
+            mtime = os.path.getmtime(logfile)
+            if not lastmodtime == mtime:
+                lastmodtime = mtime
                 time.sleep(3)
                 for i in range(5):
                     time.sleep(1)
