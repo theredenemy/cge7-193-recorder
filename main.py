@@ -272,7 +272,7 @@ while (endloop3 < 1):
                         source_functions.chat("hello BREAK")
                         # FUCK
                         for i in range(2):
-                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
+                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
                         time.sleep(1)
                         pydirectinput.press("esc")
                         # How The Fuck Did i forget this
