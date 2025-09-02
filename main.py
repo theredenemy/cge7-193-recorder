@@ -251,6 +251,9 @@ while (endloop3 < 1):
                         break
                     if listfindlib.findtext(conlist, "hello") == True:
                         source_functions.chat("hello")
+                        # FUCK
+                        source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
+                        source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
                     
                     print(f"{conlist[-1]} : {i}", end='\r')
                 nextline = conlist[-1]
