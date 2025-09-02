@@ -256,6 +256,7 @@ while (endloop3 < 1):
                             source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
                         time.sleep(1)
                         pydirectinput.press("esc")
+                        # How The Fuck Did i forget this
                         break
                         
                     
