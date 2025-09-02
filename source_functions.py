@@ -186,6 +186,8 @@ def reset_game(gamedir, logfilename, appid, process_name, logfile):
     __main__.nextline = conlist[-1]
     __main__.inserver = 0
     
+
+    
     
         
         

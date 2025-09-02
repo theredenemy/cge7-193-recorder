@@ -155,11 +155,10 @@ while (endloop3 < 1):
                 nextlinelook = nextline
             if not lastmodtime == os.path.getmtime(logfile):
                 lastmodtime = os.path.getmtime(logfile)
-                nextlinemod = nextline - 3
                 time.sleep(3)
                 for i in range(5):
                     time.sleep(1)
-                    conlist = consolelogger.consolelog(gamedir, logfilename, nextlinemod)
+                    conlist = consolelogger.consolelog(gamedir, logfilename, nextline-2)
                     if "Connection failed after 4 retries" in conlist:
                         print("\nDisconnect")
                         print("FUCK")
@@ -253,9 +252,11 @@ while (endloop3 < 1):
                     if listfindlib.findtext(conlist, "hello") == True:
                         source_functions.chat("hello")
                         # FUCK
-                        source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
-                        source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
+                        for i in range(2):
+                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
+                        time.sleep(1)
                         pydirectinput.press("esc")
+                        break
                         
                     
                     print(f"{conlist[-1]} : {i}", end='\r')
