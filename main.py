@@ -269,7 +269,7 @@ while (endloop3 < 1):
                         do_check = 1
                         break
                     if listfindlib.findtext(conlist, "hello") == True:
-                        source_functions.chat("hello")
+                        source_functions.chat("hello BREAK")
                         # FUCK
                         for i in range(2):
                             source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
