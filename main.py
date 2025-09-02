@@ -48,6 +48,7 @@ do_check = 0
 nextlinelook = 0
 nextline = 0
 mtime = 0
+connected_to_server = False
 
 try:
     if ipaddress.ip_address(serverip):
@@ -143,12 +144,28 @@ while (endloop3 < 1):
             source_functions.set_focus(process_name)
             server_join = source_functions.connect_to_server(server_ip=serverip, server_port=serverport, source_tv=True)
             if server_join == True:
-                inserver = 1
+                # Bug Fix
+                print("Connecting to Server")
+                for i in range(20):
+                    conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+                    if listfindlib.findtext(conlist, "Connected"):
+                        print("Connected To Server")
+                        inserver = 1
+                        connected_to_server = True
+                        break
+                    else:
+                        connected_to_server = False
+                        time.sleep(5)
             else:
                 print("server is down")
                 inserver = 0
                 continue
-        
+        if connected_to_server == False:
+            print("Cannot connect to Server. RESET GAME")
+            # RESET GAME AND LOGS BREAK
+            source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
+            inserver = 0
+            connected_to_server = False
         
         while (inserver >= 1):
             if not nextline == nextlinelook:

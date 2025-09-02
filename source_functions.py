@@ -167,6 +167,7 @@ def connect_to_server(server_ip, server_port, source_tv=True):
         port = server_port
     print(f"join {ip}:{port}")
     run_cmd(f"echo 1; echo 2; echo 3; echo 4; connect {ip}:{port}")
+    time.sleep(5)
     return True
 
 def reset_game(gamedir, logfilename, appid, process_name, logfile):
