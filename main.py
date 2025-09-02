@@ -158,7 +158,7 @@ while (endloop3 < 1):
                 time.sleep(3)
                 for i in range(5):
                     time.sleep(1)
-                    conlist = consolelogger.consolelog(gamedir, logfilename, nextline-2)
+                    conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
                     if "Connection failed after 4 retries" in conlist:
                         print("\nDisconnect")
                         print("FUCK")
