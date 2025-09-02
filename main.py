@@ -155,10 +155,11 @@ while (endloop3 < 1):
                 nextlinelook = nextline
             if not lastmodtime == os.path.getmtime(logfile):
                 lastmodtime = os.path.getmtime(logfile)
+                nextlinemod = nextline - 3
                 time.sleep(3)
                 for i in range(5):
                     time.sleep(1)
-                    conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+                    conlist = consolelogger.consolelog(gamedir, logfilename, nextlinemod)
                     if "Connection failed after 4 retries" in conlist:
                         print("\nDisconnect")
                         print("FUCK")
