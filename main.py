@@ -237,12 +237,15 @@ while (endloop3 < 1):
                             source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
                             inserver = 0
                             break
+                        else:
+                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
+                            break
                     
                     
                     if listfindlib.findtext(conlist, "Disconnect") == True:
                         time.sleep(5)
                         source_functions.run_cmd("echo in-server")
-                        if listfindlib.findtext(conlist, "in-server") == False:
+                        if "in-server" in conlist:
                             print("\nDisconnect")
                             source_functions.set_focus(process_name)
                             time.sleep(2)
