@@ -241,8 +241,7 @@ while (endloop3 < 1):
                     
                     if listfindlib.findtext(conlist, "Disconnect") == True:
                         time.sleep(2)
-                        for i in range(5):
-                            source_functions.run_cmd("echo in-server")
+                        source_functions.run_cmd("echo in-server")
                         if listfindlib.findtext(conlist, "in-server") == False:
                             print("\nDisconnect")
                             source_functions.set_focus(process_name)
