@@ -122,7 +122,7 @@ while (endloop3 < 1):
             do_check = 0
 
     if not info == False:
-        print("server up")
+        #print("server up")
         if not info.version == server_version:
             print("RESET GAME")
             server_version = info.version
@@ -157,7 +157,7 @@ while (endloop3 < 1):
                         connected_to_server = False
                         time.sleep(5)
             else:
-                print("server is down")
+                #print("server is down")
                 inserver = 0
                 continue
         if connected_to_server == False:
