@@ -129,6 +129,7 @@ def start_game(gamedir, logfilename, appid, process_name):
             lastmodtime = os.path.getmtime(logfile)
             if "GAME START" in conlist:
                 print('Game Has Started')
+                set_focus(process_name)
                 time.sleep(3)
                 endloop2 = 1
             conlist = consolelogger.consolelog(gamedir, logfilename, nextline)
