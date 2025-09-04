@@ -170,6 +170,7 @@ while (endloop3 < 1):
             inserver = 0
             connected_to_server = False
             joined_server = False
+            continue
         print("Joining Server")
         for i in range(60):
             print(f"{i}:", end='\r')
