@@ -189,7 +189,7 @@ while (endloop3 < 1):
             inserver = 0
             connected_to_server = False
             joined_server = False
-            
+            continue
                 
                 
         
