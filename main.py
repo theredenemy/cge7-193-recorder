@@ -201,7 +201,7 @@ while (endloop3 < 1):
                     if "The server you are trying to connect to is running" in conlist:
                         time.sleep(2)
                         source_functions.run_cmd("echo in-server")
-                        if "in-server" in conlist:
+                        if not "in-server" in conlist:
                             print("\nDisconnect")
                             source_functions.set_focus(process_name)
                             time.sleep(2)
@@ -246,7 +246,7 @@ while (endloop3 < 1):
                     if listfindlib.findtext(conlist, "Disconnect") == True:
                         time.sleep(5)
                         source_functions.run_cmd("echo in-server")
-                        if "in-server" in conlist:
+                        if not "in-server" in conlist:
                             print("\nDisconnect")
                             source_functions.set_focus(process_name)
                             time.sleep(2)
