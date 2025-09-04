@@ -49,6 +49,7 @@ nextlinelook = 0
 nextline = 0
 mtime = 0
 connected_to_server = False
+joined_server = False
 
 try:
     if ipaddress.ip_address(serverip):
@@ -100,6 +101,8 @@ conlist = consolelogger.consolelog(gamedir, logfilename)
 nextline = conlist[-1]
 while (endloop3 < 1):
     time.sleep(4.5)
+    connected_to_server = False
+    joined_server = False
     try:
         address = serverip, serverport
         info = a2s.info(address)
@@ -148,7 +151,7 @@ while (endloop3 < 1):
                 print("Connecting to Server")
                 for i in range(20):
                     conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
-                    if listfindlib.findtext(conlist, "Connected"):
+                    if listfindlib.findtext(conlist, "Connected") == True:
                         print("Connected To Server")
                         inserver = 1
                         connected_to_server = True
@@ -166,6 +169,28 @@ while (endloop3 < 1):
             source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
             inserver = 0
             connected_to_server = False
+            joined_server = False
+        print("Joining Server")
+        for i in range(60):
+            print(f"{i}:", end='\r')
+            conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+            if "Client reached server_spawn" in conlist:
+                print("\nJoined Server")
+                joined_server = True
+                break
+            else:
+                joined_server = False
+                time.sleep(5)
+        if joined_server == False:
+            print("Cannot join Server. RESET GAME")
+            # RESET GAME AND LOGS BREAK
+            source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
+            inserver = 0
+            connected_to_server = False
+            joined_server = False
+            
+                
+                
         
         while (inserver >= 1):
             if not nextline == nextlinelook:
@@ -183,6 +208,7 @@ while (endloop3 < 1):
                         print("FUCK")
                         time.sleep(5)
                         source_functions.set_focus(process_name)
+                        source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
                         pydirectinput.press("enter")
                         pydirectinput.press("enter")
                         inserver = 0
@@ -193,6 +219,7 @@ while (endloop3 < 1):
                         print("Server is full")
                         time.sleep(3)
                         source_functions.set_focus(process_name)
+                        source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
                         pydirectinput.press("enter")
                         pydirectinput.press("enter")
                         inserver = 0
@@ -208,7 +235,7 @@ while (endloop3 < 1):
                             time.sleep(2)
                             pydirectinput.press("enter")
                             pydirectinput.press("enter")
-                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
+                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
                             source_functions.run_cmd("disconnect")
                             source_functions.move_demos(gamedir, demosdirname)
                             inserver = 0
@@ -240,7 +267,7 @@ while (endloop3 < 1):
                             inserver = 0
                             break
                         else:
-                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
+                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
                             break
                     
                     
@@ -255,7 +282,7 @@ while (endloop3 < 1):
                             pydirectinput.press("enter")
                             pydirectinput.press("enter")
                             # This is a Fix for an Endless Loop What the fuck
-                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
+                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
                             source_functions.run_cmd("disconnect")
                             source_functions.move_demos(gamedir, demosdirname)
                             inserver = 0
@@ -263,7 +290,7 @@ while (endloop3 < 1):
                             break
                         else:
                             # what
-                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
+                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
                             pydirectinput.press('esc')
                             break
                     if "Server connection timed out" in conlist:
@@ -273,7 +300,7 @@ while (endloop3 < 1):
                         time.sleep(3)
                         pydirectinput.press("enter")
                         pydirectinput.press("enter")
-                        source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
+                        source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
                         source_functions.run_cmd("disconnect")
                         source_functions.move_demos(gamedir, demosdirname)
                         inserver = 0
