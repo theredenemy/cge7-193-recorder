@@ -171,17 +171,18 @@ while (endloop3 < 1):
             connected_to_server = False
             joined_server = False
             continue
-        print("Joining Server")
-        for i in range(60):
-            print(f"{i}:", end='\r')
-            conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
-            if "Client reached server_spawn" in conlist:
-                print("\nJoined Server")
-                joined_server = True
-                break
-            else:
-                joined_server = False
-                time.sleep(5)
+        if server_join == True:
+            print("Joining Server")
+            for i in range(60):
+                print(f"{i}:", end='\r')
+                conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+                if "Client reached server_spawn" in conlist:
+                    print("\nJoined Server")
+                    joined_server = True
+                    break
+                else:
+                    joined_server = False
+                    time.sleep(5)
         if joined_server == False:
             print("Cannot join Server. RESET GAME")
             # RESET GAME AND LOGS BREAK
@@ -190,7 +191,8 @@ while (endloop3 < 1):
             connected_to_server = False
             joined_server = False
             continue
-                
+           
+        source_functions.set_focus(process_name)     
                 
         
         while (inserver >= 1):
