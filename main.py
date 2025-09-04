@@ -263,6 +263,7 @@ while (endloop3 < 1):
                             # what
                             source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
                             pydirectinput.press('esc')
+                            break
                     if "Server connection timed out" in conlist:
                         print("\nDisconnect")
                         print("FUCK")
