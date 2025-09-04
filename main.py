@@ -201,6 +201,7 @@ while (endloop3 < 1):
                     if "The server you are trying to connect to is running" in conlist:
                         time.sleep(2)
                         source_functions.run_cmd("echo in-server")
+                        conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
                         if not "in-server" in conlist:
                             print("\nDisconnect")
                             source_functions.set_focus(process_name)
@@ -246,6 +247,7 @@ while (endloop3 < 1):
                     if listfindlib.findtext(conlist, "Disconnect") == True:
                         time.sleep(5)
                         source_functions.run_cmd("echo in-server")
+                        conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
                         if not "in-server" in conlist:
                             print("\nDisconnect")
                             source_functions.set_focus(process_name)
@@ -277,6 +279,31 @@ while (endloop3 < 1):
                         inserver = 0
                         do_check = 1
                         break
+                    if "Host_Error: Map is missing" in conlist:
+                        time.sleep(3)
+                        source_functions.run_cmd("echo in-server")
+                        conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+                        if not "in-server" in conlist:
+                            print("\nDisconnect")
+                            print("FUCK")
+                            source_functions.set_focus(process_name)
+                            time.sleep(3)
+                            pydirectinput.press("enter")
+                            pydirectinput.press("enter")
+                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
+                            source_functions.run_cmd("disconnect")
+                            source_functions.move_demos(gamedir, demosdirname)
+                            inserver = 0
+                            do_check = 1
+                            break
+                        else:
+                            # what
+                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
+                            pydirectinput.press('esc')
+                            break
+                            
+                        
+                        
                     if listfindlib.findtext(conlist, "hello") == True:
                         source_functions.chat("hi BREAK")
                         # FUCK
