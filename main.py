@@ -176,6 +176,9 @@ while (endloop3 < 1):
             for i in range(60):
                 print(f"{i}:", end='\r')
                 conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+                if listfindlib.findtext(conlist, "Disconnect") == True:
+                    joined_server = False
+                    break
                 if "Client reached server_spawn" in conlist:
                     print("\nJoined Server")
                     joined_server = True
