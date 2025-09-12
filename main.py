@@ -50,6 +50,7 @@ nextline = 0
 mtime = 0
 connected_to_server = False
 joined_server = False
+game_disconnect = False
 
 try:
     if ipaddress.ip_address(serverip):
@@ -103,6 +104,7 @@ while (endloop3 < 1):
     time.sleep(4.5)
     connected_to_server = False
     joined_server = False
+    game_disconnect = False
     try:
         address = serverip, serverport
         info = a2s.info(address)
@@ -178,6 +180,7 @@ while (endloop3 < 1):
                 conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
                 if listfindlib.findtext(conlist, "Disconnect") == True:
                     joined_server = False
+                    game_disconnect = True
                     break
                 if "Client reached server_spawn" in conlist:
                     print("\nJoined Server")
@@ -186,6 +189,17 @@ while (endloop3 < 1):
                 else:
                     joined_server = False
                     time.sleep(5)
+        if game_disconnect == True:
+            print("Disconnect")
+            pydirectinput.press("enter")
+            source_functions.set_focus(process_name)
+            time.sleep(1)
+            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
+            pydirectinput.press("enter")
+            pydirectinput.press("enter")
+            inserver = 0
+            do_check = 1
+            continue
         if joined_server == False:
             print("Cannot join Server. RESET GAME")
             # RESET GAME AND LOGS BREAK
@@ -214,6 +228,8 @@ while (endloop3 < 1):
                         print("FUCK")
                         time.sleep(5)
                         source_functions.set_focus(process_name)
+                        pydirectinput.press("enter")
+                        time.sleep(1)
                         source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
                         pydirectinput.press("enter")
                         pydirectinput.press("enter")
@@ -225,6 +241,8 @@ while (endloop3 < 1):
                         print("Server is full")
                         time.sleep(3)
                         source_functions.set_focus(process_name)
+                        pydirectinput.press("enter")
+                        time.sleep(1)
                         source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
                         pydirectinput.press("enter")
                         pydirectinput.press("enter")
