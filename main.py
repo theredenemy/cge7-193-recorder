@@ -199,6 +199,7 @@ while (endloop3 < 1):
             pydirectinput.press("enter")
             inserver = 0
             do_check = 1
+            nextline = conlist[-1]
             continue
         if joined_server == False:
             print("Cannot join Server. RESET GAME")
