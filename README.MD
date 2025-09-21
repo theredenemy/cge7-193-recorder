@@ -25,6 +25,8 @@ If you Run into any issues please leave a GitHub issue
 
 if you have tf2 installed in a different directory modify the gamedir variable in SOURCETV.ini
 
+# LICENSE
+
 cge7-193-recorder  Copyright (C) 2025  TheRedEnemy
     This program comes with ABSOLUTELY NO WARRANTY
     This is free software, and you are welcome to redistribute it
