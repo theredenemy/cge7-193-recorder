@@ -307,9 +307,6 @@ while (endloop3 < 1):
                             if not listfindlib.findtext(conlist, "hostname") or not listfindlib.findtext(conlist, "SourceTV"):
                                 host_status = True
                                 
-                                  
-                                
-                                
                         if not "in-server" in conlist or host_status == True:
                             print("\nDisconnect")
                             if host_status == True:
