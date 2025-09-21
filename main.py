@@ -254,8 +254,21 @@ while (endloop3 < 1):
                     if "The server you are trying to connect to is running" in conlist:
                         time.sleep(2)
                         source_functions.run_cmd("echo in-server")
+                        if "in-server" in conlist:
+                            nextline = conlist[-1]
+                            source_functions.run_cmd("status")
+                            conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+                            nextline = conlist[-1]
+                            if listfindlib.findword(conlist, "hostname") == True:
+                                host_disconnect = False
+                            elif listfindlib.findword(conlist, "SourceTV") == True:
+                                host_disconnect = False
+                            else:
+                                host_disconnect = True
+                        else:
+                            host_disconnect = True
                         conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
-                        if not "in-server" in conlist:
+                        if host_disconnect == True:
                             print("\nDisconnect")
                             source_functions.set_focus(process_name)
                             time.sleep(2)
@@ -352,7 +365,20 @@ while (endloop3 < 1):
                         time.sleep(3)
                         source_functions.run_cmd("echo in-server")
                         conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
-                        if not "in-server" in conlist:
+                        if "in-server" in conlist:
+                            nextline = conlist[-1]
+                            source_functions.run_cmd("status")
+                            conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+                            nextline = conlist[-1]
+                            if listfindlib.findword(conlist, "hostname") == True:
+                                host_disconnect = False
+                            elif listfindlib.findword(conlist, "SourceTV") == True:
+                                host_disconnect = False
+                            else:
+                                host_disconnect = True
+                        else:
+                            host_disconnect = True
+                        if host_disconnect == True:
                             print("\nDisconnect")
                             print("FUCK")
                             source_functions.set_focus(process_name)
