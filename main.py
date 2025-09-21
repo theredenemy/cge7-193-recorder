@@ -311,7 +311,7 @@ while (endloop3 < 1):
                             else:
                                 host_disconnect = True
                         else:
-                            host_disconnect = False
+                            host_disconnect = True
                                 
                         if host_disconnect == True:
                             print("\nDisconnect")
