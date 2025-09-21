@@ -307,9 +307,9 @@ while (endloop3 < 1):
                             conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
                             if listfindlib.findtext(conlist, "hostname") == False or listfindlib.findtext(conlist, "SourceTV") == False:
                                 print("HOST")
-                                host_disconnect = True
-                            else:
                                 host_disconnect = False
+                            else:
+                                host_disconnect = True
                         else:
                             host_disconnect = False
                                 
