@@ -302,6 +302,7 @@ while (endloop3 < 1):
                         source_functions.run_cmd("echo in-server")
                         conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
                         if "in-server" in conlist:
+                            nextline = conlist[-1]
                             source_functions.run_cmd("status")
                             conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
                             if listfindlib.findtext(conlist, "hostname") == False or listfindlib.findtext(conlist, "SourceTV") == False:
