@@ -310,6 +310,7 @@ while (endloop3 < 1):
                             break
                         else:
                             source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
+                            pydirectinput.press('esc')
                             break
                     
                     
