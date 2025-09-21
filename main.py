@@ -154,7 +154,7 @@ while (endloop3 < 1):
                 print("Connecting to Server")
                 for i in range(20):
                     conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
-                    if listfindlib.findtext(conlist, "Connected") == True:
+                    if listfindlib.findword(conlist, "Connected") == True:
                         print("Connected To Server")
                         inserver = 1
                         connected_to_server = True
@@ -255,8 +255,24 @@ while (endloop3 < 1):
                         time.sleep(2)
                         source_functions.run_cmd("echo in-server")
                         conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
-                        if not "in-server" in conlist:
+                        if "in-server" in conlist:
+                            nextline = conlist[-1]
+                            source_functions.run_cmd("status")
+                            conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+                            nextline = conlist[-1]
+                            if listfindlib.findword(conlist, "hostname") == True:
+                                host_disconnect = False
+                            elif listfindlib.findword(conlist, "SourceTV") == True:
+                                host_disconnect = False
+                            else:
+                                host_disconnect = True
+                        else:
+                            host_disconnect = True
+                        conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+                        if host_disconnect == True:
                             print("\nDisconnect")
+                            if host_disconnect == True:
+                                host_disconnect = False
                             source_functions.set_focus(process_name)
                             time.sleep(2)
                             pydirectinput.press("enter")
@@ -294,6 +310,7 @@ while (endloop3 < 1):
                             break
                         else:
                             source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
+                            pydirectinput.press('esc')
                             break
                     
                     
@@ -352,8 +369,23 @@ while (endloop3 < 1):
                         time.sleep(3)
                         source_functions.run_cmd("echo in-server")
                         conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
-                        if not "in-server" in conlist:
+                        if "in-server" in conlist:
+                            nextline = conlist[-1]
+                            source_functions.run_cmd("status")
+                            conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+                            nextline = conlist[-1]
+                            if listfindlib.findword(conlist, "hostname") == True:
+                                host_disconnect = False
+                            elif listfindlib.findword(conlist, "SourceTV") == True:
+                                host_disconnect = False
+                            else:
+                                host_disconnect = True
+                        else:
+                            host_disconnect = True
+                        if host_disconnect == True:
                             print("\nDisconnect")
+                            if host_disconnect == True:
+                                host_disconnect = False
                             print("FUCK")
                             source_functions.set_focus(process_name)
                             time.sleep(3)

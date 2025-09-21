@@ -32,6 +32,10 @@ def findword(list, word):
         getlen_split = len(Stringlist)
         for i in range(getlen_split):
             splitlist.append(Stringlist[i])
+        for i in range(len(splitlist)):
+            if isinstance(splitlist[i], str):
+                splitlist[i] = splitlist[i].replace('.', '')
+                splitlist[i] = splitlist[i].replace(':', '')
     if str(word) in splitlist:
         return True
     else:
