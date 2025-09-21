@@ -304,7 +304,7 @@ while (endloop3 < 1):
                         if "in-server" in conlist:
                             source_functions.run_cmd("status")
                             conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
-                            if not listfindlib.findtext(conlist, "hostname") == True or not listfindlib.findtext(conlist, "SourceTV") == True:
+                            if listfindlib.findtext(conlist, "hostname") == False or listfindlib.findtext(conlist, "SourceTV") == False:
                                 host_disconnect = True
                             else:
                                 host_disconnect = False
