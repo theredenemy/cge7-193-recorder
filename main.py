@@ -306,9 +306,9 @@ while (endloop3 < 1):
                             source_functions.run_cmd("status")
                             conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
                             nextline = conlist[-1]
-                            if listfindlib.findword(conlist, "hostname") == False:
+                            if listfindlib.findword(conlist, "hostname") == True:
                                 host_disconnect = False
-                            elif listfindlib.findword(conlist, "SourceTV") == False:
+                            elif listfindlib.findword(conlist, "SourceTV") == True:
                                 host_disconnect = False
                             else:
                                 host_disconnect = True
