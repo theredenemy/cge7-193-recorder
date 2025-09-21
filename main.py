@@ -154,7 +154,7 @@ while (endloop3 < 1):
                 print("Connecting to Server")
                 for i in range(20):
                     conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
-                    if listfindlib.findtext(conlist, "Connected") == True:
+                    if listfindlib.findword(conlist, "Connected") == True:
                         print("Connected To Server")
                         inserver = 1
                         connected_to_server = True
@@ -254,6 +254,7 @@ while (endloop3 < 1):
                     if "The server you are trying to connect to is running" in conlist:
                         time.sleep(2)
                         source_functions.run_cmd("echo in-server")
+                        conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
                         if "in-server" in conlist:
                             nextline = conlist[-1]
                             source_functions.run_cmd("status")
@@ -270,6 +271,8 @@ while (endloop3 < 1):
                         conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
                         if host_disconnect == True:
                             print("\nDisconnect")
+                            if host_disconnect == True:
+                                host_disconnect = False
                             source_functions.set_focus(process_name)
                             time.sleep(2)
                             pydirectinput.press("enter")
@@ -380,6 +383,8 @@ while (endloop3 < 1):
                             host_disconnect = True
                         if host_disconnect == True:
                             print("\nDisconnect")
+                            if host_disconnect == True:
+                                host_disconnect = False
                             print("FUCK")
                             source_functions.set_focus(process_name)
                             time.sleep(3)
