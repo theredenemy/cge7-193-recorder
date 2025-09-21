@@ -51,6 +51,7 @@ mtime = 0
 connected_to_server = False
 joined_server = False
 game_disconnect = False
+host_status = False
 
 try:
     if ipaddress.ip_address(serverip):
@@ -300,8 +301,19 @@ while (endloop3 < 1):
                         time.sleep(5)
                         source_functions.run_cmd("echo in-server")
                         conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
-                        if not "in-server" in conlist:
+                        if "in-server" in conlist:
+                            source_functions.run_cmd("status")
+                            conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+                            if not listfindlib.findtext(conlist, "hostname") or not listfindlib.findtext(conlist, "SourceTV"):
+                                host_status = True
+                                
+                                  
+                                
+                                
+                        if not "in-server" in conlist or host_status == True:
                             print("\nDisconnect")
+                            if host_status == True:
+                                host_status = False
                             source_functions.set_focus(process_name)
                             time.sleep(2)
                             pydirectinput.press("enter")
