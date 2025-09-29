@@ -1,6 +1,6 @@
-pyautogui
-pydirectinput
-pywin32
-python-a2s
-psutil
-pywinauto
+pyautogui==0.9.54
+pydirectinput==1.0.4
+pywin32==311
+python-a2s==1.4.1
+psutil==7.1.0
+pywinauto==0.6.9
