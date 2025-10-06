@@ -13,6 +13,7 @@ import fileinuse_functions
 import configHelper
 import configparser
 import traceback
+import uptime_functions
 import sys
 from makeConfig import makeConfig
 from config_defaults import (
@@ -23,7 +24,8 @@ from config_defaults import (
     demosdirname_default,
     appid_default,
     process_name_default,
-    server_version_default
+    server_version_default,
+    uptime_days_default
 )
 from source_functions import start_game
 pydirectinput.FAILSAFE = False
@@ -41,6 +43,7 @@ demosdirname = configHelper.read_config(configfile, "SOURCETV", "demosdirname", 
 appid = configHelper.read_config(configfile, "SOURCETV", "appid", appid_default)
 process_name = configHelper.read_config(configfile, "SOURCETV", "process_name", process_name_default)
 server_version = configHelper.read_config(configfile, "SOURCETV", "server_version", server_version_default)
+uptime_days = configHelper.read_config(configfile, "SOURCETV", "uptime_days", uptime_days_default)
 endloop1 = 0
 endloop2 = 0
 endloop3 = 0
@@ -140,6 +143,7 @@ while (endloop3 < 1):
             source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
             inserver = 0
             continue
+
             
             
         if info.player_count >= info.max_players:
