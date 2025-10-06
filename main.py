@@ -15,6 +15,7 @@ import configparser
 import traceback
 import uptime_functions
 import sys
+import win32_functions
 from makeConfig import makeConfig
 from config_defaults import (
     gamedir_default,
@@ -43,7 +44,7 @@ demosdirname = configHelper.read_config(configfile, "SOURCETV", "demosdirname", 
 appid = configHelper.read_config(configfile, "SOURCETV", "appid", appid_default)
 process_name = configHelper.read_config(configfile, "SOURCETV", "process_name", process_name_default)
 server_version = configHelper.read_config(configfile, "SOURCETV", "server_version", server_version_default)
-uptime_days = configHelper.read_config(configfile, "SOURCETV", "uptime_days", uptime_days_default)
+uptime_days = configHelper.read_config(configfile, "SOURCETV", "uptime_days", uptime_days_default, True)
 endloop1 = 0
 endloop2 = 0
 endloop3 = 0
@@ -109,6 +110,22 @@ while (endloop3 < 1):
     connected_to_server = False
     joined_server = False
     game_disconnect = False
+    if not uptime_days == 0:
+        if uptime_functions.get_uptime_days() >= uptime_days:
+            source_functions.set_focus(process_name)
+            source_functions.run_cmd("quit")
+            time.sleep(3)
+            source_functions.move_demos(gamedir, demosdirname)
+            time.sleep(2)
+            print("REBOOT")
+            if win32_functions.reboot() == True:
+                exit()
+            else:
+                os.system("shutdown -r -f -t 2")
+                exit()
+            
+
+
     try:
         address = serverip, serverport
         info = a2s.info(address)
