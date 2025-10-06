@@ -109,6 +109,9 @@ while (endloop3 < 1):
     connected_to_server = False
     joined_server = False
     game_disconnect = False
+    if uptime_functions.get_uptime_days() >= uptime_days:
+        print("TEMP")
+
     try:
         address = serverip, serverport
         info = a2s.info(address)
