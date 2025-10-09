@@ -10,24 +10,14 @@ import consolelogger
 import source_functions
 import listfindlib
 import fileinuse_functions
-import configHelper
 import configparser
 import traceback
 import uptime_functions
 import sys
 import win32_functions
+import configHelper
+from config_defaults import *
 from makeConfig import makeConfig
-from config_defaults import (
-    gamedir_default,
-    logfilename_default,
-    serverip_default,
-    serverport_default,
-    demosdirname_default,
-    appid_default,
-    process_name_default,
-    server_version_default,
-    uptime_days_default
-)
 from source_functions import start_game
 pydirectinput.FAILSAFE = False
 pyautogui.FAILSAFE = False
