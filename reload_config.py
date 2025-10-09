@@ -14,3 +14,6 @@ def reload_config():
     __main__.process_name = configHelper.read_config(configfile, "SOURCETV", "process_name", process_name_default)
     __main__.server_version = configHelper.read_config(configfile, "SOURCETV", "server_version", server_version_default)
     __main__.uptime_days = configHelper.read_config(configfile, "SOURCETV", "uptime_days", uptime_days_default, True)
+    __main__.fastdl = configHelper.read_config(configfile, "SOURCETV", "fastdl", fastdl_default)
+    __main__.maps_dir = configHelper.read_config(configfile, "SOURCETV", "maps_dir", maps_dir_default)
+    __main__.maps_download_dir = configHelper.read_config(configfile, "SOURCETV", "maps_download_dir", maps_download_dir_default)
