@@ -24,3 +24,4 @@ test9.py
 test9_client.py
 uptime_test.py
 reboot_test.py
+sqlitetest1.py
