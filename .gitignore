@@ -3,6 +3,7 @@
 /__pycache__
 /demofiles
 /gamelogs
+/databases
 make_venv.bat
 load_venv.bat
 test1.py
@@ -25,3 +26,5 @@ test9_client.py
 uptime_test.py
 reboot_test.py
 sqlitetest1.py
+example.db
+SOURCETVBackup.ini

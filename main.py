@@ -25,6 +25,7 @@ config = configparser.ConfigParser()
 # Start of Script
 if os.path.isfile("SOURCETV.ini") == False:
     makeConfig()
+
 configfile = "SOURCETV.ini"
 gamedir = configHelper.read_config(configfile, "SOURCETV", "gamedir", gamedir_default)
 logfilename = configHelper.read_config(configfile, "SOURCETV", "logfilename", logfilename_default)
@@ -35,6 +36,7 @@ appid = configHelper.read_config(configfile, "SOURCETV", "appid", appid_default)
 process_name = configHelper.read_config(configfile, "SOURCETV", "process_name", process_name_default)
 server_version = configHelper.read_config(configfile, "SOURCETV", "server_version", server_version_default)
 uptime_days = configHelper.read_config(configfile, "SOURCETV", "uptime_days", uptime_days_default, True)
+databases_dir = configHelper.read_config(configfile, "SOURCETV", "databases_dir", databases_dir_default)
 endloop1 = 0
 endloop2 = 0
 endloop3 = 0
@@ -46,6 +48,9 @@ connected_to_server = False
 joined_server = False
 game_disconnect = False
 host_disconnect = False
+
+if os.path.isdir(databases_dir) == False:
+    os.mkdir(databases_dir)
 
 try:
     if ipaddress.ip_address(serverip):
