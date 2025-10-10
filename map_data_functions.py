@@ -1,30 +1,26 @@
 import configparser
 import os
 
-def read_data(mapdatafile, map):
+def read_data(mapdatafile, map, readdata):
     config = configparser.ConfigParser()
     if os.path.isfile(mapdatafile) == False:
         return False
     config.read(mapdatafile)
-    
-    if not config.has_option(map, "last_updated"):
+    if not config.has_section(map):
         return False
-    if not config.has_option(map, "checksum"):
+    if not config.has_option(map, readdata):
         return False
-    last_updated = config[map]["last_updated"]
-    checksum = config[map]["checksum"]
-    data = []
-    data.append(last_updated)
-    data.append(checksum)
+    data = config[map][readdata]
     return data
 
-def set_data(mapdatafile, map, last_updated, checksum):
+def set_data(mapdatafile, map, option, data):
     config = configparser.ConfigParser()
     if os.path.isfile(mapdatafile) == False:
         return False
     config.read(mapdatafile)
     if not config.has_section(map):
         config.add_section(map)
-    config.set(map, "last_updated", last_updated)
-    config.set(map, "checksum", checksum)
+    config.set(map, option, data)
+    with open(mapdatafile, 'w') as f:
+        config.write(f)
     return True
