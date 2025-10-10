@@ -17,3 +17,4 @@ def reload_config():
     __main__.fastdl = configHelper.read_config(configfile, "SOURCETV", "fastdl", fastdl_default)
     __main__.maps_dir = configHelper.read_config(configfile, "SOURCETV", "maps_dir", maps_dir_default)
     __main__.maps_download_dir = configHelper.read_config(configfile, "SOURCETV", "maps_download_dir", maps_download_dir_default)
+    __main__.mapdatafile = configHelper.read_config(configfile, "SOURCETV", "jsonfile", mapdatafile_default)

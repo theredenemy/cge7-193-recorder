@@ -39,6 +39,7 @@ uptime_days = configHelper.read_config(configfile, "SOURCETV", "uptime_days", up
 fastdl = configHelper.read_config(configfile, "SOURCETV", "fastdl", fastdl_default)
 maps_dir = configHelper.read_config(configfile, "SOURCETV", "maps_dir", maps_dir_default)
 maps_download_dir = configHelper.read_config(configfile, "SOURCETV", "maps_download_dir", maps_download_dir_default)
+mapdatafile = configHelper.read_config(configfile, "SOURCETV", "jsonfile", mapdatafile_default)
 endloop1 = 0
 endloop2 = 0
 endloop3 = 0
