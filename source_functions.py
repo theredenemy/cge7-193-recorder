@@ -3,7 +3,7 @@ import consolelogger
 import processchecklib
 import os
 import time
-
+import requests
 def run_cmd(cmd):
     import os
     import pydirectinput
@@ -187,7 +187,19 @@ def reset_game(gamedir, logfilename, appid, process_name, logfile):
     conlist = consolelogger.consolelog(gamedir, logfilename)
     __main__.nextline = conlist[-1]
     __main__.inserver = 0
-    
+
+def check_for_map_updates(gamedir, maps_dir, fastdl):
+    allowed_extensions = ['.bsp', '.nav']
+    if os.path.isdir(maps_dir) == False:
+        return False
+    mapsdir1 = os.path.join(gamedir, maps_dir)
+    dircheck = os.listdir(mapsdir1)
+    if len(dircheck) == 0:
+        return False
+    for filename in os.listdir(mapsdir1):
+        fileext = pathlib.Path(filename).suffix
+        if fileext in allowed_extensions:
+            header = requests.head(f"{fastdl}/maps/{filename}")
 
     
     
