@@ -3,6 +3,8 @@
 /__pycache__
 /demofiles
 /gamelogs
+/databases
+/cgemaps
 make_venv.bat
 load_venv.bat
 test1.py
@@ -24,3 +26,12 @@ test9.py
 test9_client.py
 uptime_test.py
 reboot_test.py
+sqlitetest1.py
+example.db
+SOURCETVBackup.ini
+sqllitetest2.py
+jsontest1.py
+test10.py
+test3423.ini
+maps_updates.ini
+test11.py

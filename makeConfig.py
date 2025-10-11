@@ -1,14 +1,4 @@
-from config_defaults import (
-    gamedir_default,
-    logfilename_default,
-    serverip_default,
-    serverport_default,
-    demosdirname_default,
-    appid_default,
-    process_name_default,
-    server_version_default,
-    uptime_days_default
-)
+from config_defaults import *
 
 
 import configparser
@@ -30,6 +20,9 @@ def makeConfig():
   config_file.set("SOURCETV", "process_name", process_name_default)
   config_file.set("SOURCETV", "server_version", server_version_default)
   config_file.set("SOURCETV", "uptime_days", uptime_days_default)
+  config_file.set("SOURCETV", "fastdl", fastdl_default)
+  config_file.set("SOURCETV", "maps_dir", maps_dir_default)
+  config_file.set("SOURCETV", "download_dir", download_dir_default)
 
   with open(r"SOURCETV.ini", 'w') as configfileObj:
      config_file.write(configfileObj)
@@ -37,3 +30,6 @@ def makeConfig():
      configfileObj.close()
 
   print("Config file 'SOURCETV.ini' created")
+
+if __name__ == "__main__":
+   makeConfig()
