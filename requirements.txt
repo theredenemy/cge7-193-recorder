@@ -5,3 +5,4 @@ python-a2s==1.4.1
 psutil==7.1.0
 pywinauto==0.6.9
 requests==2.32.5
+python-dateutil==2.9.0.post0

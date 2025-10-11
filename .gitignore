@@ -4,6 +4,7 @@
 /demofiles
 /gamelogs
 /databases
+/cgemaps
 make_venv.bat
 load_venv.bat
 test1.py
@@ -31,3 +32,6 @@ SOURCETVBackup.ini
 sqllitetest2.py
 jsontest1.py
 test10.py
+test3423.ini
+maps_updates.ini
+test11.py

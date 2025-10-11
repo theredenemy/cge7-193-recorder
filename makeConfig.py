@@ -22,7 +22,7 @@ def makeConfig():
   config_file.set("SOURCETV", "uptime_days", uptime_days_default)
   config_file.set("SOURCETV", "fastdl", fastdl_default)
   config_file.set("SOURCETV", "maps_dir", maps_dir_default)
-  config_file.set("SOURCETV", "maps_download_dir", maps_download_dir_default)
+  config_file.set("SOURCETV", "download_dir", download_dir_default)
 
   with open(r"SOURCETV.ini", 'w') as configfileObj:
      config_file.write(configfileObj)

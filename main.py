@@ -38,8 +38,8 @@ server_version = configHelper.read_config(configfile, "SOURCETV", "server_versio
 uptime_days = configHelper.read_config(configfile, "SOURCETV", "uptime_days", uptime_days_default, True)
 fastdl = configHelper.read_config(configfile, "SOURCETV", "fastdl", fastdl_default)
 maps_dir = configHelper.read_config(configfile, "SOURCETV", "maps_dir", maps_dir_default)
-maps_download_dir = configHelper.read_config(configfile, "SOURCETV", "maps_download_dir", maps_download_dir_default)
-mapdatafile = configHelper.read_config(configfile, "SOURCETV", "jsonfile", mapdatafile_default)
+download_dir = configHelper.read_config(configfile, "SOURCETV", "download_dir", download_dir_default)
+mapdatafile = configHelper.read_config(configfile, "SOURCETV", "mapdatafile", mapdatafile_default)
 endloop1 = 0
 endloop2 = 0
 endloop3 = 0
@@ -95,6 +95,8 @@ consolelogger.logstart(gamedir, logfilename)
 lastmodtime = os.path.getmtime(logfile)
 time.sleep(3)
 source_functions.move_demos(gamedir, demosdirname)
+time.sleep(3)
+source_functions.check_for_map_updates(gamedir, os.path.join(gamedir, download_dir, maps_dir), fastdl, mapdatafile)
 time.sleep(3)
 start_game(gamedir, logfilename, appid, process_name)
 lastmodtime = os.path.getmtime(logfile)

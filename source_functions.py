@@ -3,7 +3,14 @@ import consolelogger
 import processchecklib
 import os
 import time
-import requests
+import hashlib
+import dateutil
+def download_file(url, filename):
+    import requests
+    file_data = requests.get(url, allow_redirects=True)
+    open(filename, 'wb').write(file_data.content)
+    return filename
+
 def run_cmd(cmd):
     import os
     import pydirectinput
@@ -180,6 +187,7 @@ def reset_game(gamedir, logfilename, appid, process_name, logfile):
         pass
     time.sleep(5)
     consolelogger.logstart(gamedir, logfilename)
+    check_for_map_updates(__main__.gamedir, os.path.join(__main__.gamedir, __main__.download_dir, __main__.maps_dir), __main__.fastdl, __main__.mapdatafile)
     lastmodtime = os.path.getmtime(logfile)
     start_game(gamedir, logfilename, appid, process_name)
     set_focus(process_name)
@@ -187,8 +195,43 @@ def reset_game(gamedir, logfilename, appid, process_name, logfile):
     conlist = consolelogger.consolelog(gamedir, logfilename)
     __main__.nextline = conlist[-1]
     __main__.inserver = 0
-
-def check_for_map_updates(gamedir, maps_dir, fastdl):
+def move_file(filepath, dir):
+    import shutil
+    file_time = os.path.getctime(filepath)
+    file_ti_c = time.ctime(file_time)
+    file_c = time.strptime(file_ti_c)
+    date = time.strftime("%Y-%m-%d", file_c)
+    hour = time.strftime("%H", file_c)
+    datedir = f"{dir}\\{date}"
+    hourdir = f"{dir}\\{date}\\hour-{hour}"
+    filename = os.path.basename(filepath)
+    if os.path.isdir(datedir) == False:
+        os.mkdir(datedir)
+    if os.path.isdir(hourdir) == False:
+            os.mkdir(hourdir)
+    if os.path.isfile(f"{hourdir}\\{filename}") == True:
+        number = 0
+        while True:
+            if os.path.isdir(number) == False:
+                break
+            else:
+                number = number + 1
+        os.mkdir(number)
+        shutil.move(f"{hourdir}\\{filename}", f"{hourdir}\\{number}\\" )
+    shutil.move(filepath, f"{hourdir}\\" )
+    print(f"Moved {filename} to {hourdir}\\{filename} ")
+def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile):
+    import pathlib
+    import requests
+    import map_data_functions
+    import shutil
+    import traceback
+    cgemaps_dir = "cgemaps"
+    tempdir = f"{cgemaps_dir}\\temp"
+    if os.path.isdir(cgemaps_dir) == False:
+        os.mkdir(cgemaps_dir)
+    if fastdl == "False":
+        return False
     allowed_extensions = ['.bsp', '.nav']
     if os.path.isdir(maps_dir) == False:
         return False
@@ -196,10 +239,76 @@ def check_for_map_updates(gamedir, maps_dir, fastdl):
     dircheck = os.listdir(mapsdir1)
     if len(dircheck) == 0:
         return False
-    for filename in os.listdir(mapsdir1):
-        fileext = pathlib.Path(filename).suffix
-        if fileext in allowed_extensions:
-            header = requests.head(f"{fastdl}/maps/{filename}")
+    try:
+        for filename in os.listdir(mapsdir1):
+            print(filename)
+            filepath = f"{mapsdir1}\\{filename}"
+            fileext = pathlib.Path(filepath).suffix
+            map = pathlib.Path(filepath).stem
+        
+            if fileext in allowed_extensions:
+                #time.sleep(0.1)
+                url = f"{fastdl}/maps/{filename}"
+                header = requests.head(url)
+                if header.status_code == 200:
+                    date_string = header.headers.get('Last-Modified')
+                    dt = dateutil.parser.parse(date_string)
+                    unix_time = dt.timestamp()
+                    last_updated = map_data_functions.read_data(mapdatafile, map, "last_updated", is_float=True)
+                    checksum = map_data_functions.read_data(mapdatafile, map, "checksum")
+                    if last_updated == False or checksum == False:
+                        if os.path.isdir(tempdir) == True:
+                            shutil.rmtree(tempdir)
+                        os.mkdir(tempdir)
+                        map_download_temp = f"{tempdir}\\{map}_download{fileext}"
+                        download_file(url, map_download_temp)
+                        basename = os.path.basename(map_download_temp)
+                        map_download_md5 = hashlib.md5(open(map_download_temp, 'rb').read()).hexdigest()
+                        map_md5 = hashlib.md5(open(filepath, 'rb').read()).hexdigest()
+                        if not map_md5 == map_download_md5:
+                            map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
+                            map_data_functions.set_data(mapdatafile, map, "checksum", map_download_md5)
+                            move_file(filepath, cgemaps_dir)
+                        else:
+                            map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
+                            map_data_functions.set_data(mapdatafile, map, "checksum", map_md5)
+                        last_updated = map_data_functions.read_data(mapdatafile, map, "last_updated", is_float=True)
+                        checksum = map_data_functions.read_data(mapdatafile, map, "checksum")
+                        continue
+                else:
+                    print(header.status_code)
+                    continue
+                
+
+                        
+                if not last_updated == unix_time:
+                    print(f"UPDATE: {filename}")
+                    tempdir = f"{cgemaps_dir}\\temp"
+                    if os.path.isdir(tempdir) == True:
+                        shutil.rmtree(tempdir)
+                    os.mkdir(tempdir)
+                    map_download_temp = f"{tempdir}\\{map}_download.{fileext}"
+                    download_file(url, map_download_temp)
+                    basename = os.path.basename(map_download_temp)
+                    map_download_md5 = hashlib.md5(open(map_download_temp, 'rb').read()).hexdigest()
+                    if not checksum == map_download_md5:
+                        map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
+                        map_data_functions.set_data(mapdatafile, map, "checksum", map_download_md5)
+                        move_file(filepath, cgemaps_dir)
+                    else:
+                        map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
+            else:
+                print(f"skip {filename}")
+    except Exception as e:
+        print(type(e).__name__)
+        error = traceback.format_exc()
+        print(error)
+        return False
+    if os.path.isdir(tempdir) == True:
+        shutil.rmtree(tempdir)
+    return True
+
+
 
     
     
