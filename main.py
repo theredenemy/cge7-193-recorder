@@ -420,7 +420,43 @@ while (endloop3 < 1):
                             source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
                             pydirectinput.press('esc')
                             break
-                            
+                    if "Host_Error: Client's map differs from the server's" in conlist:
+                        time.sleep(3)
+                        source_functions.run_cmd("echo in-server")
+                        conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+                        if "in-server" in conlist:
+                            nextline = conlist[-1]
+                            source_functions.run_cmd("status")
+                            conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+                            nextline = conlist[-1]
+                            if listfindlib.findword(conlist, "hostname") == True:
+                                host_disconnect = False
+                            elif listfindlib.findword(conlist, "SourceTV") == True:
+                                host_disconnect = False
+                            else:
+                                host_disconnect = True
+                        else:
+                            host_disconnect = True
+                        if host_disconnect == True:
+                            print("\nDisconnect")
+                            if host_disconnect == True:
+                                host_disconnect = False
+                            print("FUCK")
+                            source_functions.set_focus(process_name)
+                            time.sleep(3)
+                            pydirectinput.press("enter")
+                            pydirectinput.press("enter")
+                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
+                            source_functions.run_cmd("disconnect")
+                            source_functions.move_demos(gamedir, demosdirname)
+                            inserver = 0
+                            do_check = 1
+                            break
+                        else:
+                            # what
+                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
+                            pydirectinput.press('esc')
+                            break        
                         
                         
                     if listfindlib.findtext(conlist, "hello") == True:
