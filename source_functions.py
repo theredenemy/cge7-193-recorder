@@ -212,11 +212,11 @@ def move_file(filepath, dir):
     if os.path.isfile(f"{hourdir}\\{filename}") == True:
         number = 0
         while True:
-            if os.path.isdir(number) == False:
+            if os.path.isdir(str(number)) == False:
                 break
             else:
                 number = number + 1
-        os.mkdir(number)
+        os.mkdir(str(number))
         shutil.move(f"{hourdir}\\{filename}", f"{hourdir}\\{number}\\" )
         print(f"Moved {filename} to {hourdir}\\{number}\\{filename} ")
     else:
