@@ -218,8 +218,10 @@ def move_file(filepath, dir):
                 number = number + 1
         os.mkdir(number)
         shutil.move(f"{hourdir}\\{filename}", f"{hourdir}\\{number}\\" )
-    shutil.move(filepath, f"{hourdir}\\" )
-    print(f"Moved {filename} to {hourdir}\\{filename} ")
+        print(f"Moved {filename} to {hourdir}\\{number}\\{filename} ")
+    else:
+        shutil.move(filepath, f"{hourdir}\\" )
+        print(f"Moved {filename} to {hourdir}\\{filename} ")
 def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile):
     import pathlib
     import requests
