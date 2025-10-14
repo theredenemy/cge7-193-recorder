@@ -271,6 +271,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile):
                             map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
                             map_data_functions.set_data(mapdatafile, map, "checksum", map_download_md5)
                             move_file(filepath, cgemaps_dir)
+                            shutil.move(map_download_temp, f"{mapsdir1}\\{filename}")
                         else:
                             map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
                             map_data_functions.set_data(mapdatafile, map, "checksum", map_md5)
@@ -289,7 +290,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile):
                     if os.path.isdir(tempdir) == True:
                         shutil.rmtree(tempdir)
                     os.mkdir(tempdir)
-                    map_download_temp = f"{tempdir}\\{map}_download.{fileext}"
+                    map_download_temp = f"{tempdir}\\{map}_download{fileext}"
                     download_file(url, map_download_temp)
                     basename = os.path.basename(map_download_temp)
                     map_download_md5 = hashlib.md5(open(map_download_temp, 'rb').read()).hexdigest()
@@ -297,6 +298,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile):
                         map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
                         map_data_functions.set_data(mapdatafile, map, "checksum", map_download_md5)
                         move_file(filepath, cgemaps_dir)
+                        shutil.move(map_download_temp, f"{mapsdir1}\\{filename}")
                     else:
                         map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
             else:
