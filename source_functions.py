@@ -195,8 +195,10 @@ def reset_game(gamedir, logfilename, appid, process_name, logfile):
     conlist = consolelogger.consolelog(gamedir, logfilename)
     __main__.nextline = conlist[-1]
     __main__.inserver = 0
-def move_file(filepath, dir):
+def move_map(filepath, dir):
     import shutil
+    import pathlib
+    map = pathlib.Path(filepath).stem
     file_time = os.path.getctime(filepath)
     file_ti_c = time.ctime(file_time)
     file_c = time.strptime(file_ti_c)
@@ -212,11 +214,11 @@ def move_file(filepath, dir):
     if os.path.isfile(f"{hourdir}\\{filename}") == True:
         number = 0
         while True:
-            if os.path.isdir(str(number)) == False:
+            if os.path.isdir(f"{map}_{number}") == False:
                 break
             else:
                 number = number + 1
-        os.mkdir(str(number))
+        os.mkdir(f"{map}_{number}")
         shutil.move(f"{hourdir}\\{filename}", f"{hourdir}\\{number}\\" )
         print(f"Moved {filename} to {hourdir}\\{number}\\{filename} ")
     else:
@@ -270,7 +272,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile):
                         if not map_md5 == map_download_md5:
                             map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
                             map_data_functions.set_data(mapdatafile, map, "checksum", map_download_md5)
-                            move_file(filepath, cgemaps_dir)
+                            move_map(filepath, cgemaps_dir)
                             shutil.move(map_download_temp, f"{mapsdir1}\\{filename}")
                         else:
                             map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
@@ -297,7 +299,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile):
                     if not checksum == map_download_md5:
                         map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
                         map_data_functions.set_data(mapdatafile, map, "checksum", map_download_md5)
-                        move_file(filepath, cgemaps_dir)
+                        move_map(filepath, cgemaps_dir)
                         shutil.move(map_download_temp, f"{mapsdir1}\\{filename}")
                     else:
                         map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
