@@ -219,7 +219,7 @@ def move_map(filepath, dir):
             else:
                 number = number + 1
         os.mkdir(f"{map}_{number}")
-        shutil.move(f"{hourdir}\\{filename}", f"{hourdir}\\{map}_{number}\\" )
+        shutil.move(filepath, f"{hourdir}\\{map}_{number}\\" )
         print(f"Moved {filename} to {hourdir}\\{map}_{number}\\{filename} ")
     else:
         shutil.move(filepath, f"{hourdir}\\" )
