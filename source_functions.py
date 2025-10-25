@@ -40,7 +40,7 @@ def chat(msg):
     time.sleep(1)
     pydirectinput.press('enter')
     
-def move_demos(gamedir, demosdirname):
+def move_demos(gamedir, demosdirname, demofilesdirname="demofiles"):
     import os
     import time
     import shutil
@@ -48,7 +48,6 @@ def move_demos(gamedir, demosdirname):
     print("\nMoving Demos")
     maindir = os.getcwd()
     demosint = 0
-    demofilesdirname = "demofiles"
     allowed_extensions = ['.dem', '.json']
     demosdir = os.path.join(gamedir, demosdirname)
     dircheck = os.listdir(demosdir)

@@ -18,3 +18,4 @@ def reload_config():
     __main__.maps_dir = configHelper.read_config(configfile, "SOURCETV", "maps_dir", maps_dir_default)
     __main__.maps_download_dir = configHelper.read_config(configfile, "SOURCETV", "maps_download_dir", download_dir_default)
     __main__.mapdatafile = configHelper.read_config(configfile, "SOURCETV", "mapdatafile", mapdatafile_default)
+    __main__.demofilesdirname = configHelper.read_config(configfile, "SOURCETV", "demofiles", demofilesdirname_default)

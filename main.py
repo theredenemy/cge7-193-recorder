@@ -40,6 +40,7 @@ fastdl = configHelper.read_config(configfile, "SOURCETV", "fastdl", fastdl_defau
 maps_dir = configHelper.read_config(configfile, "SOURCETV", "maps_dir", maps_dir_default)
 download_dir = configHelper.read_config(configfile, "SOURCETV", "download_dir", download_dir_default)
 mapdatafile = configHelper.read_config(configfile, "SOURCETV", "mapdatafile", mapdatafile_default)
+demofilesdirname = configHelper.read_config(configfile, "SOURCETV", "demofilesdirname", demofilesdirname_default)
 endloop1 = 0
 endloop2 = 0
 endloop3 = 0
@@ -94,7 +95,7 @@ while(fileinuse_functions.is_file_in_use(logfile) == True):
 consolelogger.logstart(gamedir, logfilename)
 lastmodtime = os.path.getmtime(logfile)
 time.sleep(3)
-source_functions.move_demos(gamedir, demosdirname)
+source_functions.move_demos(gamedir, demosdirname, demofilesdirname=demofilesdirname)
 time.sleep(3)
 source_functions.check_for_map_updates(gamedir, os.path.join(gamedir, download_dir, maps_dir), fastdl, mapdatafile)
 time.sleep(3)
@@ -112,7 +113,7 @@ while (endloop3 < 1):
             source_functions.set_focus(process_name)
             source_functions.run_cmd("quit")
             time.sleep(3)
-            source_functions.move_demos(gamedir, demosdirname)
+            source_functions.move_demos(gamedir, demosdirname, demofilesdirname=demofilesdirname)
             time.sleep(2)
             print("REBOOT")
             if win32_functions.reboot() == True:
@@ -297,7 +298,7 @@ while (endloop3 < 1):
                             pydirectinput.press("enter")
                             source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
                             source_functions.run_cmd("disconnect")
-                            source_functions.move_demos(gamedir, demosdirname)
+                            source_functions.move_demos(gamedir, demosdirname, demofilesdirname=demofilesdirname)
                             inserver = 0
                             print("RESET GAME")
                             print(f"Fetching Server Version From Server: {serverip}:{serverport}")
@@ -361,7 +362,7 @@ while (endloop3 < 1):
                             # This is a Fix for an Endless Loop What the fuck
                             source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
                             source_functions.run_cmd("disconnect")
-                            source_functions.move_demos(gamedir, demosdirname)
+                            source_functions.move_demos(gamedir, demosdirname, demofilesdirname=demofilesdirname)
                             inserver = 0
                             do_check = 1
                             break
@@ -379,7 +380,7 @@ while (endloop3 < 1):
                         pydirectinput.press("enter")
                         source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
                         source_functions.run_cmd("disconnect")
-                        source_functions.move_demos(gamedir, demosdirname)
+                        source_functions.move_demos(gamedir, demosdirname, demofilesdirname=demofilesdirname)
                         inserver = 0
                         do_check = 1
                         break
@@ -411,7 +412,7 @@ while (endloop3 < 1):
                             pydirectinput.press("enter")
                             source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
                             source_functions.run_cmd("disconnect")
-                            source_functions.move_demos(gamedir, demosdirname)
+                            source_functions.move_demos(gamedir, demosdirname, demofilesdirname=demofilesdirname)
                             inserver = 0
                             do_check = 1
                             break
@@ -448,7 +449,7 @@ while (endloop3 < 1):
                             pydirectinput.press("enter")
                             source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
                             source_functions.run_cmd("disconnect")
-                            source_functions.move_demos(gamedir, demosdirname)
+                            source_functions.move_demos(gamedir, demosdirname, demofilesdirname=demofilesdirname)
                             inserver = 0
                             do_check = 1
                             break

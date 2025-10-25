@@ -11,3 +11,4 @@ fastdl_default = "https://wavespray.dathost.net/fastdl/teamfortress2/679d9656b85
 maps_dir_default = "maps"
 download_dir_default = "download"
 mapdatafile_default = "maps_updates.ini"
+demofilesdirname_default = "demofiles"
