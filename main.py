@@ -173,6 +173,10 @@ while (endloop3 < 1):
                 print("Connecting to Server")
                 for i in range(20):
                     conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+                    if "The server you are trying to connect to is running" in conlist:
+                        joined_server = False
+                        game_disconnect = True
+                        break
                     if listfindlib.findword(conlist, "Connected") == True:
                         print("Connected To Server")
                         inserver = 1
@@ -199,10 +203,6 @@ while (endloop3 < 1):
                 print(f"{i}:", end='\r')
                 conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
                 if listfindlib.findtext(conlist, "Disconnect") == True:
-                    joined_server = False
-                    game_disconnect = True
-                    break
-                if "The server you are trying to connect to is running" in conlist:
                     joined_server = False
                     game_disconnect = True
                     break
