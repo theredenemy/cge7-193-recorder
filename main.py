@@ -202,6 +202,10 @@ while (endloop3 < 1):
                     joined_server = False
                     game_disconnect = True
                     break
+                if "The server you are trying to connect to is running" in conlist:
+                    joined_server = False
+                    game_disconnect = True
+                    break
                 if "Client reached server_spawn" in conlist:
                     print("\nJoined Server")
                     joined_server = True
