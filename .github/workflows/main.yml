@@ -12,9 +12,6 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
-    output_name: CGE7-193-Recorder.exe
-    artifact_name: CGE7-193-Recorder-Windows
-    
     steps:
     - uses: actions/checkout@v4
     
