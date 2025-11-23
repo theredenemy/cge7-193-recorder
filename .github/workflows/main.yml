@@ -40,6 +40,6 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: dist/CGE7-193-Recorder.exe
-        tag_name: ${{ steps.tag.outputs.tag }}
+        tag_name: v.*.*.*
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
