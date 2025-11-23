@@ -28,7 +28,7 @@ jobs:
     
     - name: Build executable (Windows)
       run: |
-        pyinstaller --onefile --windowed --add-data "assets;assets" --exclude-module pkg_resources --icon=assets/images/sourcebox.png --name CGE7-193-Recorder main.py
+        pyinstaller --onefile --name CGE7-193-Recorder main.py
     
     - name: Upload artifact
       uses: actions/upload-artifact@v4
