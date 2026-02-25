@@ -5,6 +5,7 @@ import os
 import time
 import hashlib
 import dateutil
+import win32_functions
 def download_file(url, filename):
     import requests
     file_data = requests.get(url, allow_redirects=True)
@@ -16,6 +17,8 @@ def run_cmd(cmd):
     import pydirectinput
     import pyautogui
     import time
+    from __main__ import process_name
+    win32_functions.set_focus_win32(process_name)
     pydirectinput.FAILSAFE = False
     pyautogui.FAILSAFE = False
     time.sleep(3)
@@ -31,6 +34,8 @@ def chat(msg):
     import pydirectinput
     import pyautogui
     import time
+    from __main__ import process_name
+    win32_functions.set_focus_win32(process_name)
     pydirectinput.FAILSAFE = False
     pyautogui.FAILSAFE = False
     time.sleep(3)
@@ -98,8 +103,11 @@ def get_pid(process_name):
         if proc.info['name'].lower() == process_name.lower():
             pid = proc.info['pid']
             return pid
-
 def set_focus(process_name):
+    # Forward Old Function To the new one
+    func_data = win32_functions.set_focus_win32(process_name)
+    return func_data
+def set_focus_old(process_name):
     from pywinauto import Application
     import time
     pid = get_pid(process_name)
@@ -124,6 +132,7 @@ def start_game(gamedir, logfilename, appid, process_name):
     lastmodtime = os.path.getmtime(logfile)
     endloop1 = 0
     endloop2 = 0
+    count1 = 0
     time.sleep(3)
     print(f"Starting AppID: {appid}")
     os.system(f"start steam://rungameid/{appid}")
@@ -144,6 +153,26 @@ def start_game(gamedir, logfilename, appid, process_name):
             conlist = consolelogger.consolelog(gamedir, logfilename, nextline)
             nextline = conlist[-1]
             lastmodtime = os.path.getmtime(logfile)
+    while True:
+        print(f"{count1} : ", end='\r')
+        run_cmd("echo GAME ONLINE")
+        if not lastmodtime == os.path.getmtime(logfile):
+                conlist = consolelogger.consolelog(gamedir, logfilename)
+                nextline = conlist[-1]
+                lastmodtime = os.path.getmtime(logfile)
+                if "GAME ONLINE" in conlist:
+                    print('Game Is Online')
+                    win32_functions.set_focus_win32(process_name)
+                    time.sleep(3)
+                    break
+        conlist = consolelogger.consolelog(gamedir, logfilename, nextline)
+        nextline = conlist[-1]
+        lastmodtime = os.path.getmtime(logfile)
+        count1 = count1 + 1
+        time.sleep(3)
+
+
+
 
 def connect_to_server(server_ip, server_port, source_tv=True):
     import socket
