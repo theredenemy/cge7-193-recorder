@@ -3,6 +3,7 @@ import win32con
 import win32security
 import win32gui
 import win32process
+import ctypes
 import psutil
 import time
 def reboot():
@@ -62,7 +63,6 @@ def set_focus(process_name):
         except RuntimeError:
             print("Window Not Responding")
             time.sleep(3)
-
 def set_focus_win32(process_name):
     pid = get_pid(process_name)
     if pid is False:
@@ -73,13 +73,17 @@ def set_focus_win32(process_name):
             hwnd = hwnds[0]
 
             if hwnd:
+                while ctypes.windll.user32.IsHungAppWindow(hwnd):
+                    pass
                 win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
+                
 
                 win32gui.SetForegroundWindow(hwnd)
+            
                 return True
             else:
                 return False
-        except Exception:
+        except Exception as e:
             print("Window Not Responding")
             time.sleep(3)
 
