@@ -50,6 +50,9 @@ def move_demos(gamedir, demosdirname, demofilesdirname="demofiles"):
     demosint = 0
     allowed_extensions = ['.dem', '.json']
     demosdir = os.path.join(gamedir, demosdirname)
+    if not os.path.isdir(demosdir):
+        print("NO DEMOS DIR")
+        return False
     dircheck = os.listdir(demosdir)
     if len(dircheck) == 0:
         return False
