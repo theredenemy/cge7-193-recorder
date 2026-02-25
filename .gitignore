@@ -3,6 +3,7 @@
 /__pycache__
 /demofiles
 /demofiles_TEST
+/demofiles*
 /gamelogs
 /databases
 /cgemaps
