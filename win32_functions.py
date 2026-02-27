@@ -74,7 +74,8 @@ def set_focus_win32(process_name):
 
             if hwnd:
                 while ctypes.windll.user32.IsHungAppWindow(hwnd):
-                    pass
+                    print("Window Not Responding")
+                    time.sleep(3)
                 win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
                 
 
@@ -84,7 +85,7 @@ def set_focus_win32(process_name):
             else:
                 return False
         except Exception as e:
-            print("Window Not Responding")
+            print(f"ERROR : {e}")
             time.sleep(3)
 
     
