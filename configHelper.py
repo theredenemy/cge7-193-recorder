@@ -22,3 +22,12 @@ def read_config(configfile, section, option, default_value=0, is_int=False):
         value = config[section][option]
     
     return value
+def set_config(configfile, section, option, value=0):
+    config = configparser.ConfigParser()
+    config.read(configfile)
+    if not config.has_section(section):
+        config.add_section(section)
+    config.set(section, option, str(value))
+    with open(configfile, 'w', encoding='utf-8', errors='ignore') as f:
+        config.write(f)
+    return True
