@@ -471,9 +471,34 @@ while (endloop3 < 1):
                     if listfindlib.findtext(conlist, "hello") == True:
                         source_functions.chat("hi BREAK")
                         # FUCK
-                        for i in range(2):
-                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6; echo BREAK")
+                        source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6; echo BREAK")
                         time.sleep(1)
+                        nextline = conlist[-1]
+                        source_functions.run_cmd("status")
+                        conlist = consolelogger.consolelog(gamedir, logfilename, nextline-3)
+                        nextline = conlist[-1]
+                        if listfindlib.findword(conlist, "hostname") == True:
+                            host_disconnect = False
+                        elif listfindlib.findword(conlist, "SourceTV") == True:
+                            host_disconnect = False
+                        else:
+                            host_disconnect = True
+                        if host_disconnect == True:
+                            print("\nDisconnect")
+                            if host_disconnect == True:
+                                host_disconnect = False
+                            print("FUCK")
+                            source_functions.set_focus(process_name)
+                            time.sleep(3)
+                            pydirectinput.press("enter")
+                            pydirectinput.press("enter")
+                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4")
+                            source_functions.run_cmd("disconnect")
+                            source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6")
+                            source_functions.move_demos(gamedir, demosdirname, demofilesdirname=demofilesdirname)
+                            inserver = 0
+                            do_check = 1
+                            break
                         pydirectinput.press("esc")
                         # How The Fuck Did i forget this
                         break
