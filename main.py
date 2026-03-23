@@ -63,6 +63,9 @@ except ValueError:
         ip = socket.gethostbyname(serverip)
     except socket.gaierror:
         ip = serverip
+winsound.Beep(frequency=475,duration=1000)
+winsound.PlaySound("SystemQuestion", winsound.SND_ALIAS)
+print("Hello")
 print("Getting Server Version")
 if server_version == "None":
     print(f"Fetching Server Version From Server: {ip}:{serverport}")
@@ -210,7 +213,7 @@ while (endloop3 < 1):
                     break
                 if "Client reached server_spawn" in conlist:
                     print("\nJoined Server")
-                    winsound.Beep(2, 2)
+                    winsound.Beep(500, 10)
                     joined_server = True
                     break
                 else:
