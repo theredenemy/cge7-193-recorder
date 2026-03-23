@@ -213,7 +213,7 @@ while (endloop3 < 1):
                     break
                 if "Client reached server_spawn" in conlist:
                     print("\nJoined Server")
-                    winsound.Beep(500, 10)
+                    winsound.Beep(600, 500)
                     joined_server = True
                     break
                 else:
