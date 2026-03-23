@@ -6,6 +6,7 @@ import time
 import hashlib
 import dateutil
 import win32_functions
+import winsound
 def download_file(url, filename):
     import requests
     file_data = requests.get(url, allow_redirects=True)
@@ -161,6 +162,7 @@ def start_game(gamedir, logfilename, appid, process_name):
                 nextline = conlist[-1]
                 lastmodtime = os.path.getmtime(logfile)
                 if "GAME ONLINE" in conlist:
+                    winsound.Beep(frequency=600, duration=500)
                     print('Game Is Online')
                     win32_functions.set_focus_win32(process_name)
                     time.sleep(3)
@@ -205,6 +207,7 @@ def connect_to_server(server_ip, server_port, source_tv=True):
     else:
         port = server_port
     print(f"join {ip}:{port}")
+    winsound.Beep(frequency=590, duration=500)
     run_cmd(f"echo 1; echo 2; echo 3; echo 4; connect {ip}:{port}")
     time.sleep(5)
     return True
