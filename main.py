@@ -17,6 +17,7 @@ import sys
 import win32_functions
 import configHelper
 import ctypes
+import winsound
 from config_defaults import *
 from makeConfig import makeConfig
 from source_functions import start_game
@@ -209,6 +210,7 @@ while (endloop3 < 1):
                     break
                 if "Client reached server_spawn" in conlist:
                     print("\nJoined Server")
+                    winsound.Beep(2, 1)
                     joined_server = True
                     break
                 else:
@@ -247,7 +249,6 @@ while (endloop3 < 1):
                 source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
                 inserver = 0
                 break
-            print("2")
             if ctypes.windll.user32.IsHungAppWindow(win32_functions.GetHwndsFromPID(win32_functions.get_pid(process_name))[0]):
                 print("Game Not Responding")
                 for i in range(100):
