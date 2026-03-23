@@ -63,7 +63,7 @@ except ValueError:
         ip = socket.gethostbyname(serverip)
     except socket.gaierror:
         ip = serverip
-winsound.Beep(frequency=475,duration=1000)
+winsound.Beep(frequency=590, duration=500)
 winsound.PlaySound("SystemQuestion", winsound.SND_ALIAS)
 print("Hello")
 print("Getting Server Version")
