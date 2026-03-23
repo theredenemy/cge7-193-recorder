@@ -16,6 +16,7 @@ import uptime_functions
 import sys
 import win32_functions
 import configHelper
+import ctypes
 from config_defaults import *
 from makeConfig import makeConfig
 from source_functions import start_game
@@ -238,6 +239,34 @@ while (endloop3 < 1):
                 
         
         while (inserver >= 1):
+            if not win32_functions.get_pid(process_name):
+                print("GAME IS NOT OPEN")
+                time.sleep(10)
+                print("GAME CRASH")
+                print("RESET GAME")
+                source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
+                inserver = 0
+                break
+            print("2")
+            if ctypes.windll.user32.IsHungAppWindow(win32_functions.GetHwndsFromPID(win32_functions.get_pid(process_name))[0]):
+                print("Game Not Responding")
+                for i in range(100):
+                    if ctypes.windll.user32.IsHungAppWindow(win32_functions.GetHwndsFromPID(win32_functions.get_pid(process_name))[0]):
+                        hung = True
+                        print("Game Not Responding")
+                        time.sleep(3)
+                    else:
+                        hung = False
+                        break
+                if hung:
+                    print("GAME CRASH")
+                    print("RESET GAME")
+                    source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
+                    inserver = 0
+                    break
+            if not process_name == win32_functions.GetForegroundWindowProcessName():
+                time.sleep(5)
+                win32_functions.set_focus_win32(process_name)
             if not nextline == nextlinelook:
                 print(nextline, end='\r')
                 nextlinelook = nextline

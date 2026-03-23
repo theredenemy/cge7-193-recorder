@@ -22,6 +22,16 @@ def reboot():
     win32api.ExitWindowsEx(win32con.EWX_REBOOT | win32con.EWX_FORCE, 0)
     win32api.CloseHandle(token)
     return True
+def GetForegroundWindowProcessName():
+    try:
+
+        hwnd = win32gui.GetForegroundWindow()
+
+        _, pid = win32process.GetWindowThreadProcessId(hwnd)
+        
+        return psutil.Process(pid).name()
+    except Exception as e:
+        return False
 
 def get_pid(process_name):
     
