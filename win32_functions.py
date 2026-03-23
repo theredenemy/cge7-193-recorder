@@ -6,6 +6,7 @@ import win32process
 import ctypes
 import psutil
 import time
+import win32com.client
 def reboot():
     
     # What The Fuck
@@ -87,7 +88,9 @@ def set_focus_win32(process_name):
                     print("Window Not Responding")
                     time.sleep(3)
                 win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
-                
+
+                shell = win32com.client.Dispatch("WScript.Shell")
+                shell.SendKeys('%')
 
                 win32gui.SetForegroundWindow(hwnd)
             
