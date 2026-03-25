@@ -60,6 +60,7 @@ def GetHwndsFromPID(pid):
             return True
     
     win32gui.EnumWindows(callback, hwnds)
+    
     return hwnds
 def set_focus(process_name):
     from pywinauto import Application
@@ -100,6 +101,15 @@ def set_focus_win32(process_name):
         except Exception as e:
             print(f"ERROR : {e}")
             time.sleep(3)
+def get_window_x_y(hwnd):
+    rect = win32gui.GetWindowRect(hwnd)
+        
+    x = (rect[0] + rect[2]) // 2
+    y = (rect[1] + rect[3]) // 2
+
+    return x, y
+
+
 
     
     
