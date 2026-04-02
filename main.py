@@ -252,22 +252,30 @@ while (endloop3 < 1):
                 source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
                 inserver = 0
                 break
-            if ctypes.windll.user32.IsHungAppWindow(win32_functions.GetHwndsFromPID(win32_functions.get_pid(process_name))[0]):
-                print("Game Not Responding")
-                for i in range(100):
-                    if ctypes.windll.user32.IsHungAppWindow(win32_functions.GetHwndsFromPID(win32_functions.get_pid(process_name))[0]):
-                        hung = True
-                        print("Game Not Responding")
-                        time.sleep(3)
-                    else:
-                        hung = False
+            try:
+                if ctypes.windll.user32.IsHungAppWindow(win32_functions.GetHwndsFromPID(win32_functions.get_pid(process_name))[0]):
+                    print("Game Not Responding")
+                    for i in range(100):
+                        if ctypes.windll.user32.IsHungAppWindow(win32_functions.GetHwndsFromPID(win32_functions.get_pid(process_name))[0]):
+                            hung = True
+                            print("Game Not Responding")
+                            time.sleep(3)
+                        else:
+                            hung = False
+                            break
+                    if hung:
+                        print("GAME CRASH")
+                        print("RESET GAME")
+                        source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
+                        inserver = 0
                         break
-                if hung:
-                    print("GAME CRASH")
-                    print("RESET GAME")
-                    source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
-                    inserver = 0
-                    break
+            except IndexError:
+                print("GAME CRASH")
+                print("RESET GAME")
+                source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
+                inserver = 0
+                break
+
             if not process_name == win32_functions.GetForegroundWindowProcessName():
                 time.sleep(5)
                 win32_functions.set_focus_win32(process_name)
