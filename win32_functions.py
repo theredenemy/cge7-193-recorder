@@ -62,10 +62,35 @@ def GetHwndsFromPID(pid):
     win32gui.EnumWindows(callback, hwnds)
     
     return hwnds
+def get_pid_window(process_name):
+    pid = None
+    hwnds = []
+    def callback(hwnd, hwnds):
+        if win32gui.IsWindowVisible(hwnd):
+            #print(hwnd)
+            found = win32process.GetWindowThreadProcessId(hwnd)
+            for id in found:
+                #print("pid", id, pid)
+                if id == pid:
+                    # print(id, hwnd)
+                    hwnds.append(hwnd)
+                    break
+            return True
+    for proc in psutil.process_iter(['pid', 'name']):
+        if proc.info['name'].lower() == process_name.lower():
+            pid = proc.info['pid']
+            win32gui.EnumWindows(callback, hwnds)
+            if hwnds:
+                return pid
+            else:
+                pid = None
+    if pid is None:
+        return False
+
 def set_focus(process_name):
     from pywinauto import Application
     import time
-    pid = get_pid(process_name)
+    pid = get_pid_window(process_name)
     endloop = 0
     while (endloop <= 0):
         try:
@@ -76,7 +101,7 @@ def set_focus(process_name):
             print("Window Not Responding")
             time.sleep(3)
 def set_focus_win32(process_name):
-    pid = get_pid(process_name)
+    pid = get_pid_window(process_name)
     if pid is False:
         return False
     while True:
