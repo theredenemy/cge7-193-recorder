@@ -1,7 +1,7 @@
 pyautogui==0.9.54
 pydirectinput==1.0.4
 pywin32==312
-python-a2s==1.4.1
+python-a2s==1.4.2
 psutil==7.2.2
 pywinauto==0.6.9
 requests==2.34.2
