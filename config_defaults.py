@@ -15,3 +15,5 @@ mapdatafile_default = "maps_updates.ini"
 demofilesdirname_default = "demofiles"
 gamelogs_dir_default = os.path.join(os.getcwd(), "gamelogs")
 join_sourcetv_default = True
+use_server_password_default = False
+password_default = "password"

@@ -178,7 +178,7 @@ def start_game(gamedir, logfilename, appid, process_name, gamelogs_dir):
 
 
 
-def connect_to_server(server_ip, server_port, source_tv=True):
+def connect_to_server(server_ip, server_port, source_tv=True, use_server_password=False, password="password"):
     import socket
     import ipaddress
     import a2s
@@ -210,7 +210,10 @@ def connect_to_server(server_ip, server_port, source_tv=True):
         port = server_port
     print(f"join {ip}:{port}")
     winsound.Beep(frequency=590, duration=500)
-    run_cmd(f"echo 1; echo 2; echo 3; echo 4; connect {ip}:{port}")
+    if use_server_password:
+        run_cmd(f"echo 1; echo 2; echo 3; echo 4; connect {ip}:{port}; password {password}")
+    else:
+        run_cmd(f"echo 1; echo 2; echo 3; echo 4; connect {ip}:{port}")
     time.sleep(5)
     return True
 
