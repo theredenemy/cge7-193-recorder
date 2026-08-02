@@ -8,7 +8,7 @@ def getmaxlines(filename):
         for line in file:
             linenum += 1
         return linenum
-def logstart(gamedir, logfilename):
+def logstart(gamedir, logfilename, logfile_dir=os.path.join(os.getcwd(), "gamelogs")):
     logfile = f"{gamedir}\\{logfilename}"
     if os.path.isdir("gamelogs") == False:
         os.mkdir("gamelogs")
@@ -19,7 +19,7 @@ def logstart(gamedir, logfilename):
             return
     if os.path.isfile(logfile) == True:
         try:
-            os.rename(logfile, f"gamelogs\\tf2log_{time.strftime("%Y-%m-%d-%H-%M-%S")}.txt")
+            os.rename(logfile, os.path.join(logfile_dir, f"tf2log_{time.strftime("%Y-%m-%d-%H-%M-%S")}.txt"))
         except PermissionError:
             print("gameopened")
     if os.path.isfile(logfile) == False:

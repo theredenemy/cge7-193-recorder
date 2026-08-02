@@ -1,3 +1,4 @@
+import os
 gamedir_default = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Team Fortress 2\\tf"
 logfilename_default = "datalogtf2.txt"
 serverip_default = "wavespray.dathost.net"
@@ -12,3 +13,5 @@ maps_dir_default = "maps"
 download_dir_default = "download"
 mapdatafile_default = "maps_updates.ini"
 demofilesdirname_default = "demofiles"
+gamelogs_dir_default = os.path.join(os.getcwd(), "gamelogs")
+join_sourcetv_default = True

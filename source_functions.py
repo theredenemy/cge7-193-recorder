@@ -22,11 +22,10 @@ def run_cmd(cmd):
     win32_functions.set_focus_win32(process_name)
     pydirectinput.FAILSAFE = False
     pyautogui.FAILSAFE = False
-    time.sleep(3)
     pydirectinput.press('F7')
-    time.sleep(1)
+    time.sleep(0.1)
     pyautogui.write(cmd)
-    time.sleep(1)
+    time.sleep(0.1)
     pydirectinput.press('enter')
     pydirectinput.press('F6')
 
@@ -55,7 +54,10 @@ def move_demos(gamedir, demosdirname, demofilesdirname="demofiles"):
     maindir = os.getcwd()
     demosint = 0
     allowed_extensions = ['.dem', '.json']
-    demosdir = os.path.join(gamedir, demosdirname)
+    if not os.path.isabs(demosdirname):
+        demosdir = os.path.join(gamedir, demosdirname)
+    else:
+        demosdir = demosdirname
     if not os.path.isdir(demosdir):
         print("NO DEMOS DIR")
         return False
@@ -123,13 +125,13 @@ def set_focus_old(process_name):
             time.sleep(3)
 
 
-def start_game(gamedir, logfilename, appid, process_name):
+def start_game(gamedir, logfilename, appid, process_name, gamelogs_dir):
     import fileinuse_functions
     logfile = f"{gamedir}\\{logfilename}"
     os.system(f"taskkill /f /im {process_name}")
     while(fileinuse_functions.is_file_in_use(logfile) == True):
         pass
-    consolelogger.logstart(gamedir, logfilename)
+    consolelogger.logstart(gamedir, logfilename, gamelogs_dir)
     lastmodtime = os.path.getmtime(logfile)
     endloop1 = 0
     endloop2 = 0
@@ -212,7 +214,7 @@ def connect_to_server(server_ip, server_port, source_tv=True):
     time.sleep(5)
     return True
 
-def reset_game(gamedir, logfilename, appid, process_name, logfile):
+def reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir):
     import fileinuse_functions
     import __main__
     # RESET GAME AND LOGS BREAK
@@ -223,7 +225,7 @@ def reset_game(gamedir, logfilename, appid, process_name, logfile):
     consolelogger.logstart(gamedir, logfilename)
     check_for_map_updates(__main__.gamedir, os.path.join(__main__.gamedir, __main__.download_dir, __main__.maps_dir), __main__.fastdl, __main__.mapdatafile)
     lastmodtime = os.path.getmtime(logfile)
-    start_game(gamedir, logfilename, appid, process_name)
+    start_game(gamedir, logfilename, appid, process_name, gamelogs_dir)
     set_focus(process_name)
     __main__.lastmodtime = os.path.getmtime(logfile)
     conlist = consolelogger.consolelog(gamedir, logfilename)

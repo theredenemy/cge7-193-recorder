@@ -43,6 +43,8 @@ maps_dir = configHelper.read_config(configfile, "SOURCETV", "maps_dir", maps_dir
 download_dir = configHelper.read_config(configfile, "SOURCETV", "download_dir", download_dir_default)
 mapdatafile = configHelper.read_config(configfile, "SOURCETV", "mapdatafile", mapdatafile_default)
 demofilesdirname = configHelper.read_config(configfile, "SOURCETV", "demofilesdirname", demofilesdirname_default)
+gamelogs_dir = configHelper.read_config(configfile, "SOURCETV", "gamelogs_dir", default_value=gamelogs_dir_default)
+join_sourcetv = configHelper.read_config(configfile, "SOURCETV", "join_sourcetv", default_value=join_sourcetv_default, is_bool=True)
 endloop1 = 0
 endloop2 = 0
 endloop3 = 0
@@ -97,14 +99,14 @@ time.sleep(3)
 logfile = f"{gamedir}\\{logfilename}"
 while(fileinuse_functions.is_file_in_use(logfile) == True):
     pass
-consolelogger.logstart(gamedir, logfilename)
+consolelogger.logstart(gamedir, logfilename, gamelogs_dir)
 lastmodtime = os.path.getmtime(logfile)
 time.sleep(3)
 source_functions.move_demos(gamedir, demosdirname, demofilesdirname=demofilesdirname)
 time.sleep(3)
 source_functions.check_for_map_updates(gamedir, os.path.join(gamedir, download_dir, maps_dir), fastdl, mapdatafile)
 time.sleep(3)
-start_game(gamedir, logfilename, appid, process_name)
+start_game(gamedir, logfilename, appid, process_name, gamelogs_dir)
 lastmodtime = os.path.getmtime(logfile)
 conlist = consolelogger.consolelog(gamedir, logfilename)
 nextline = conlist[-1]
@@ -145,7 +147,7 @@ while (endloop3 < 1):
         maxlinescon = consolelogger.getmaxlines(logfile)
         if maxlinescon >= 5000:
             print("RESET GAME")
-            source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
+            source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir)
             do_check = 0
         else:
             do_check = 0
@@ -160,7 +162,7 @@ while (endloop3 < 1):
             with open(configfile, 'w') as f:
                 config.write(f)
             # RESET GAME AND LOGS BREAK
-            source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
+            source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir)
             inserver = 0
             continue
 
@@ -172,7 +174,7 @@ while (endloop3 < 1):
             continue
         else:
             source_functions.set_focus(process_name)
-            server_join = source_functions.connect_to_server(server_ip=serverip, server_port=serverport, source_tv=True)
+            server_join = source_functions.connect_to_server(server_ip=serverip, server_port=serverport, source_tv=join_sourcetv)
             if server_join == True:
                 # Bug Fix
                 print("Connecting to Server")
@@ -197,7 +199,7 @@ while (endloop3 < 1):
         if connected_to_server == False:
             print("Cannot connect to Server. RESET GAME")
             # RESET GAME AND LOGS BREAK
-            source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
+            source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir)
             inserver = 0
             connected_to_server = False
             joined_server = False
@@ -234,7 +236,7 @@ while (endloop3 < 1):
         if joined_server == False:
             print("Cannot join Server. RESET GAME")
             # RESET GAME AND LOGS BREAK
-            source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
+            source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir)
             inserver = 0
             connected_to_server = False
             joined_server = False
@@ -249,7 +251,7 @@ while (endloop3 < 1):
                 time.sleep(10)
                 print("GAME CRASH")
                 print("RESET GAME")
-                source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
+                source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir)
                 inserver = 0
                 break
             try:
@@ -266,13 +268,13 @@ while (endloop3 < 1):
                     if hung:
                         print("GAME CRASH")
                         print("RESET GAME")
-                        source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
+                        source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir)
                         inserver = 0
                         break
             except IndexError:
                 print("GAME CRASH")
                 print("RESET GAME")
-                source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
+                source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir)
                 inserver = 0
                 break
 
@@ -369,7 +371,7 @@ while (endloop3 < 1):
                                     print("Done")
                                     endloop4 = 1
                                     info = False
-                            source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile)
+                            source_functions.reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir)
                             inserver = 0
                             break
                         else:
