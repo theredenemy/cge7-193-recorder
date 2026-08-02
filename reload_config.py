@@ -20,3 +20,6 @@ def reload_config():
     __main__.mapdatafile = configHelper.read_config(configfile, "SOURCETV", "mapdatafile", mapdatafile_default)
     __main__.demofilesdirname = configHelper.read_config(configfile, "SOURCETV", "demofiles", demofilesdirname_default)
     __main__.gamelogs_dir = configHelper.read_config(configfile, "SOURCETV", "gamelogs_dir", default_value=gamelogs_dir_default)
+    __main__.join_sourcetv = configHelper.read_config(configfile, "SOURCETV", "join_sourcetv", default_value=join_sourcetv_default, is_bool=True)
+    __main__.use_server_password = configHelper.read_config(configfile, "SOURCETV", "use_server_password", default_value=use_server_password_default, is_bool=True)
+    __main__.password = configHelper.read_config(configfile, "SOURCETV", "password", default_value=password_default)
