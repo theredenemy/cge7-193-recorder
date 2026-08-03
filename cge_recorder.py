@@ -82,7 +82,7 @@ class CGE_RECORDER:
         joined_server = False
         game_disconnect = False
         host_disconnect = False
-        print(self.check_vars())
+        
         if None in self.check_vars():
             return
         try:
