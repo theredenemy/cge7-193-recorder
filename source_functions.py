@@ -13,12 +13,11 @@ def download_file(url, filename):
     open(filename, 'wb').write(file_data.content)
     return filename
 
-def run_cmd(cmd):
+def run_cmd(cmd, process_name):
     import os
     import pydirectinput
     import pyautogui
     import time
-    from __main__ import process_name
     win32_functions.set_focus_win32(process_name)
     pydirectinput.FAILSAFE = False
     pyautogui.FAILSAFE = False
@@ -158,7 +157,7 @@ def start_game(gamedir, logfilename, appid, process_name, gamelogs_dir):
             lastmodtime = os.path.getmtime(logfile)
     while True:
         print(f"{count1} : ", end='\r')
-        run_cmd("echo GAME ONLINE")
+        run_cmd("echo GAME ONLINE", process_name)
         if not lastmodtime == os.path.getmtime(logfile):
                 conlist = consolelogger.consolelog(gamedir, logfilename)
                 nextline = conlist[-1]
@@ -178,7 +177,7 @@ def start_game(gamedir, logfilename, appid, process_name, gamelogs_dir):
 
 
 
-def connect_to_server(server_ip, server_port, source_tv=True, use_server_password=False, password="password"):
+def connect_to_server(process_name, server_ip, server_port, source_tv=True, use_server_password=False, password="password"):
     import socket
     import ipaddress
     import a2s
@@ -211,9 +210,9 @@ def connect_to_server(server_ip, server_port, source_tv=True, use_server_passwor
     print(f"join {ip}:{port}")
     winsound.Beep(frequency=590, duration=500)
     if use_server_password:
-        run_cmd(f"echo 1; echo 2; echo 3; echo 4; connect {ip}:{port}; password {password}")
+        run_cmd(f"echo 1; echo 2; echo 3; echo 4; connect {ip}:{port}; password {password}", process_name)
     else:
-        run_cmd(f"echo 1; echo 2; echo 3; echo 4; connect {ip}:{port}")
+        run_cmd(f"echo 1; echo 2; echo 3; echo 4; connect {ip}:{port}", process_name)
     time.sleep(5)
     return True
 
