@@ -36,5 +36,6 @@ jsontest1.py
 test10.py
 test3423.ini
 maps_updates.ini
+*.ini
 test11.py
 test12.py
