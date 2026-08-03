@@ -176,7 +176,7 @@ while (endloop3 < 1):
             continue
         else:
             source_functions.set_focus(process_name)
-            server_join = source_functions.connect_to_server(server_ip=serverip, server_port=serverport, source_tv=join_sourcetv)
+            server_join = source_functions.connect_to_server(server_ip=serverip, server_port=serverport, source_tv=join_sourcetv, use_server_password=use_server_password, password=password)
             if server_join == True:
                 # Bug Fix
                 print("Connecting to Server")
