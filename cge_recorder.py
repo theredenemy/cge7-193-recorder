@@ -1,3 +1,4 @@
+# cge7-193-recorder : cge_recorder.py Copyright (C) 2026  TheRedEnemy
 import configparser
 
 import configHelper
