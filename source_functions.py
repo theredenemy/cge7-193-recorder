@@ -216,7 +216,7 @@ def connect_to_server(process_name, server_ip, server_port, source_tv=True, use_
     time.sleep(5)
     return True
 
-def reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir):
+def reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir, download_dir, maps_dir, fastdl, mapdatafile):
     import fileinuse_functions
     import __main__
     # RESET GAME AND LOGS BREAK
@@ -225,7 +225,7 @@ def reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir)
         pass
     time.sleep(5)
     consolelogger.logstart(gamedir, logfilename)
-    check_for_map_updates(__main__.gamedir, os.path.join(__main__.gamedir, __main__.download_dir, __main__.maps_dir), __main__.fastdl, __main__.mapdatafile)
+    check_for_map_updates(gamedir, os.path.join(gamedir, download_dir, maps_dir), fastdl, mapdatafile)
     lastmodtime = os.path.getmtime(logfile)
     start_game(gamedir, logfilename, appid, process_name, gamelogs_dir)
     set_focus(process_name)
