@@ -28,12 +28,12 @@ def run_cmd(cmd, process_name):
     pydirectinput.press('enter')
     pydirectinput.press('F6')
 
-def chat(msg):
+def chat(msg, process_name):
     import os
     import pydirectinput
     import pyautogui
     import time
-    from __main__ import process_name
+    
     win32_functions.set_focus_win32(process_name)
     pydirectinput.FAILSAFE = False
     pyautogui.FAILSAFE = False

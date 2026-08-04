@@ -531,7 +531,7 @@ class CGE_RECORDER:
 
 
                             if listfindlib.findtext(conlist, "hello") == True:
-                                source_functions.chat("hi BREAK")
+                                source_functions.chat("hi BREAK", self.process_name)
                                 # FUCK
                                 source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6; echo BREAK", self.process_name)
                                 time.sleep(1)
