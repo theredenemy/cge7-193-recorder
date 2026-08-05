@@ -216,9 +216,9 @@ def connect_to_server(process_name, server_ip, server_port, source_tv=True, use_
     time.sleep(5)
     return True
 
-def reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir, download_dir, maps_dir, fastdl, mapdatafile):
+def reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir, download_dir, maps_dir, fastdl, mapdatafile, lastmodtime, nextline, inserver):
     import fileinuse_functions
-    import __main__
+    
     # RESET GAME AND LOGS BREAK
     os.system(f"taskkill /f /im {process_name}")
     while(fileinuse_functions.is_file_in_use(logfile) == True):
@@ -229,10 +229,11 @@ def reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir,
     lastmodtime = os.path.getmtime(logfile)
     start_game(gamedir, logfilename, appid, process_name, gamelogs_dir)
     set_focus(process_name)
-    __main__.lastmodtime = os.path.getmtime(logfile)
+    lastmodtime = os.path.getmtime(logfile)
     conlist = consolelogger.consolelog(gamedir, logfilename)
-    __main__.nextline = conlist[-1]
-    __main__.inserver = 0
+    nextline = conlist[-1]
+    inserver = 0
+    return lastmodtime, nextline, inserver
 def move_map(filepath, dir):
     import shutil
     import pathlib
