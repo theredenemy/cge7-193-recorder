@@ -184,7 +184,7 @@ class CGE_RECORDER:
                     self.server_version = info.version
                     configHelper.set_config(self.main_configfile, "SOURCETV", "self.server_version", self.server_version)
                     # RESET GAME AND LOGS BREAK
-                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile)
+                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver)
                     inserver = 0
                     continue
 
@@ -221,7 +221,7 @@ class CGE_RECORDER:
                 if connected_to_server == False:
                     print("Cannot connect to Server. RESET GAME")
                     # RESET GAME AND LOGS BREAK
-                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile)
+                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver)
                     inserver = 0
                     connected_to_server = False
                     joined_server = False
@@ -258,7 +258,7 @@ class CGE_RECORDER:
                 if joined_server == False:
                     print("Cannot join Server. RESET GAME")
                     # RESET GAME AND LOGS BREAK
-                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile)
+                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver)
                     inserver = 0
                     connected_to_server = False
                     joined_server = False
@@ -273,7 +273,7 @@ class CGE_RECORDER:
                         time.sleep(10)
                         print("GAME CRASH")
                         print("RESET GAME")
-                        lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile)
+                        lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver)
                         inserver = 0
                         break
                     try:
@@ -290,13 +290,13 @@ class CGE_RECORDER:
                             if hung:
                                 print("GAME CRASH")
                                 print("RESET GAME")
-                                lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile)
+                                lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver)
                                 inserver = 0
                                 break
                     except IndexError:
                         print("GAME CRASH")
                         print("RESET GAME")
-                        lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile)
+                        lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver)
                         inserver = 0
                         break
 
@@ -390,7 +390,7 @@ class CGE_RECORDER:
                                             print("Done")
                                             endloop4 = 1
                                             info = False
-                                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile)
+                                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver)
                                     inserver = 0
                                     break
                                 else:
