@@ -341,11 +341,11 @@ class CGE_RECORDER:
                                 break
                             if "The server you are trying to connect to is running" in conlist:
                                 time.sleep(2)
-                                source_functions.run_cmd("echo in-server")
+                                source_functions.run_cmd("echo in-server", self.process_name)
                                 conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline-3)
                                 if "in-server" in conlist:
                                     nextline = conlist[-1]
-                                    source_functions.run_cmd("status")
+                                    source_functions.run_cmd("status", self.process_name)
                                     conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline-3)
                                     nextline = conlist[-1]
                                     if listfindlib.findword(conlist, "hostname") == True:
@@ -446,7 +446,7 @@ class CGE_RECORDER:
                                 pydirectinput.press("enter")
                                 pydirectinput.press("enter")
                                 source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6", self.process_name)
-                                source_functions.run_cmd("disconnect")
+                                source_functions.run_cmd("disconnect", self.process_name)
                                 source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6", self.process_name)
                                 source_functions.move_demos(self.gamedir, self.demosdirname, demofilesdirname=self.demofilesdirname)
                                 inserver = 0
