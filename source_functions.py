@@ -7,6 +7,7 @@ import hashlib
 import dateutil
 import win32_functions
 import winsound
+import fileinuse_functions
 def download_file(url, filename):
     import requests
     file_data = requests.get(url, allow_redirects=True)
@@ -82,6 +83,11 @@ def move_demos(gamedir, demosdirname, demofilesdirname="demofiles"):
                     hour = time.strftime("%H", file_c)
                     datedir = f"{demofilesdirname}\\{date}"
                     hourdir = f"{demofilesdirname}\\{date}\\hour-{hour}"
+                    print("Checking File Lock...")
+                    while True:
+                        if not fileinuse_functions.is_file_in_use(filepath):
+                            break
+                        time.sleep(1)
                     if os.path.isdir(datedir) == False:
                         os.mkdir(datedir)
                     if os.path.isdir(hourdir) == False:
