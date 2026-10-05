@@ -116,7 +116,7 @@ class CGE_RECORDER:
                     info = False
                 if not info == False:
                     self.server_version = info.version
-                    configHelper.set_config(self.main_configfile, "SOURCETV", "self.server_version", self.server_version)
+                    configHelper.set_config(self.main_configfile, "SOURCETV", "server_version", self.server_version)
                     print("Done")
                     endloop4 = 1
                     info = False
@@ -184,7 +184,7 @@ class CGE_RECORDER:
                 if not info.version == self.server_version:
                     print("RESET GAME")
                     self.server_version = info.version
-                    configHelper.set_config(self.main_configfile, "SOURCETV", "self.server_version", self.server_version)
+                    configHelper.set_config(self.main_configfile, "SOURCETV", "server_version", self.server_version)
                     # RESET GAME AND LOGS BREAK
                     lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver)
                     inserver = 0
@@ -388,7 +388,7 @@ class CGE_RECORDER:
                                             info = False
                                         if not info == False:
                                             self.server_version = info.version
-                                            configHelper.set_config(self.main_configfile, "SOURCETV", "self.server_version", self.server_version)
+                                            configHelper.set_config(self.main_configfile, "SOURCETV", "server_version", self.server_version)
                                             print("Done")
                                             endloop4 = 1
                                             info = False
