@@ -78,10 +78,12 @@ class CGE_RECORDER:
         nextlinelook = 0
         nextline = 0
         mtime = 0
+        inserver = 0
         connected_to_server = False
         joined_server = False
         game_disconnect = False
         host_disconnect = False
+        
         
         if None in self.check_vars():
             return
