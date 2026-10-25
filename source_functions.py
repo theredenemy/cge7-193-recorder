@@ -1,4 +1,5 @@
 # cge7-193-recorder : source_functions.py Copyright (C) 2025  TheRedEnemy
+# NOTE: I Need To Clean This Code Up
 import consolelogger
 import processchecklib
 import os
@@ -240,11 +241,11 @@ def reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir,
     nextline = conlist[-1]
     inserver = 0
     return lastmodtime, nextline, inserver
-def move_map(filepath, dir):
+def move_map(filepath, dir, new_map_url):
     import shutil
     import pathlib
     map = pathlib.Path(filepath).stem
-    file_time = os.path.getctime(filepath)
+    file_time = os.path.getmtime(filepath)
     file_ti_c = time.ctime(file_time)
     file_c = time.strptime(file_ti_c)
     date = time.strftime("%Y-%m-%d", file_c)
@@ -266,6 +267,9 @@ def move_map(filepath, dir):
         os.mkdir(f"{map}_{number}")
         shutil.move(filepath, f"{hourdir}\\{map}_{number}\\" )
         print(f"Moved {filename} to {hourdir}\\{map}_{number}\\{filename} ")
+        new_map_dir = os.path.join(hourdir, f"{map}_new", f"{map}_{number}")
+        os.makedirs(new_map_dir)
+        download_file(new_map_url, os.path.join(new_map_dir, f"{map}.bsp"))
     else:
         shutil.move(filepath, f"{hourdir}\\" )
         print(f"Moved {filename} to {hourdir}\\{filename} ")
@@ -317,7 +321,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile):
                         if not map_md5 == map_download_md5:
                             map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
                             map_data_functions.set_data(mapdatafile, map, "checksum", map_download_md5)
-                            move_map(filepath, cgemaps_dir)
+                            move_map(filepath, cgemaps_dir, url)
                             shutil.move(map_download_temp, f"{mapsdir1}\\{filename}")
                         else:
                             map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
