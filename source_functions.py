@@ -331,7 +331,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile, send_discord_w
                             shutil.move(map_download_temp, f"{mapsdir1}\\{filename}")
                         else:
                             print(f"NEW MAP : {filename}")
-                            winsound.Beep(frequency=600, duration=2)
+                            winsound.Beep(frequency=600, duration=900)
                             if send_discord_webhook:
                                 data = {"content": f"NEW MAP : {filename}"}
                                 req = requests.post(webhook_url, json=data)
@@ -350,7 +350,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile, send_discord_w
                         
                 if not last_updated == unix_time:
                     print(f"UPDATE: {filename}")
-                    winsound.Beep(frequency=600, duration=2)
+                    winsound.Beep(frequency=600, duration=900)
                     if send_discord_webhook:
                         data = {"content": f"MAP UPDATE : {filename}"}
                         req = requests.post(webhook_url, json=data)
