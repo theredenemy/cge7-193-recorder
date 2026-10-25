@@ -526,8 +526,10 @@ class CGE_RECORDER:
                                     source_functions.run_cmd("disconnect", self.process_name)
                                     source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6", self.process_name)
                                     source_functions.move_demos(self.gamedir, self.demosdirname, demofilesdirname=self.demofilesdirname)
+
                                     inserver = 0
                                     do_check = 1
+                                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver, send_discord_webhook=self.send_discord_webhook, webhook_url=self.webhook_url)
                                     break
                                 else:
                                     # what
