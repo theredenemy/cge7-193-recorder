@@ -17,3 +17,5 @@ gamelogs_dir_default = os.path.join(os.getcwd(), "gamelogs")
 join_sourcetv_default = True
 use_server_password_default = False
 password_default = "password"
+send_discord_webhook_default = False
+webhook_url_default = "PUT_DISCORD_WEBHOOK_URL_HERE"

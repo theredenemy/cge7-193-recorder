@@ -223,7 +223,7 @@ def connect_to_server(process_name, server_ip, server_port, source_tv=True, use_
     time.sleep(5)
     return True
 
-def reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir, download_dir, maps_dir, fastdl, mapdatafile, lastmodtime, nextline, inserver):
+def reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir, download_dir, maps_dir, fastdl, mapdatafile, lastmodtime, nextline, inserver, send_discord_webhook=False, webhook_url=None):
     import fileinuse_functions
     
     # RESET GAME AND LOGS BREAK
@@ -232,7 +232,7 @@ def reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir,
         pass
     time.sleep(5)
     consolelogger.logstart(gamedir, logfilename)
-    check_for_map_updates(gamedir, os.path.join(gamedir, download_dir, maps_dir), fastdl, mapdatafile)
+    check_for_map_updates(gamedir, os.path.join(gamedir, download_dir, maps_dir), fastdl, mapdatafile, send_discord_webhook=send_discord_webhook, webhook_url=webhook_url)
     lastmodtime = os.path.getmtime(logfile)
     start_game(gamedir, logfilename, appid, process_name, gamelogs_dir)
     set_focus(process_name)
@@ -241,7 +241,7 @@ def reset_game(gamedir, logfilename, appid, process_name, logfile, gamelogs_dir,
     nextline = conlist[-1]
     inserver = 0
     return lastmodtime, nextline, inserver
-def move_map(filepath, dir, new_map_url):
+def move_map(filepath, dir, new_map_url=None):
     import shutil
     import pathlib
     map = pathlib.Path(filepath).stem
@@ -267,16 +267,18 @@ def move_map(filepath, dir, new_map_url):
         os.mkdir(os.path.join(hourdir, f"{map}_{number}"))
         shutil.move(filepath, os.path.join(hourdir, f"{map}_{number}", filename))
         print(f"Moved {filename} to {hourdir}\\{map}_{number}\\{filename} ")
-        new_map_dir = os.path.join(hourdir, f"{map}_new", f"{map}_{number}")
-        os.makedirs(new_map_dir)
-        download_file(new_map_url, os.path.join(new_map_dir, filename))
+        if not new_map_url:
+            new_map_dir = os.path.join(hourdir, f"{map}_new", f"{map}_{number}")
+            
+            os.makedirs(new_map_dir)
+            download_file(new_map_url, os.path.join(new_map_dir, filename))
     else:
         new_map_dir = os.path.join(hourdir, f"{map}_new", map)
         os.makedirs(new_map_dir)
         download_file(new_map_url, os.path.join(new_map_dir, filename))
         shutil.move(filepath, f"{hourdir}\\" )
         print(f"Moved {filename} to {hourdir}\\{filename} ")
-def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile):
+def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile, send_discord_webhook=False, webhook_url=None):
     import pathlib
     import requests
     import map_data_functions
@@ -322,11 +324,18 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile):
                         map_download_md5 = hashlib.md5(open(map_download_temp, 'rb').read()).hexdigest()
                         map_md5 = hashlib.md5(open(filepath, 'rb').read()).hexdigest()
                         if not map_md5 == map_download_md5:
+                            
                             map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
                             map_data_functions.set_data(mapdatafile, map, "checksum", map_download_md5)
-                            move_map(filepath, cgemaps_dir, url)
+                            move_map(filepath, cgemaps_dir)
                             shutil.move(map_download_temp, f"{mapsdir1}\\{filename}")
                         else:
+                            print(f"NEW MAP : {filename}")
+                            if send_discord_webhook:
+                                data = {"content": f"NEW MAP : {filename}"}
+                                req = requests.post(webhook_url, json=data)
+                                if req.status_code == "204":
+                                    print("SENT")
                             map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
                             map_data_functions.set_data(mapdatafile, map, "checksum", map_md5)
                         last_updated = map_data_functions.read_data(mapdatafile, map, "last_updated", is_float=True)
@@ -340,6 +349,11 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile):
                         
                 if not last_updated == unix_time:
                     print(f"UPDATE: {filename}")
+                    if send_discord_webhook:
+                        data = {"content": f"MAP UPDATE : {filename}"}
+                        req = requests.post(webhook_url, json=data)
+                        if req.status_code == "204":
+                            print("SENT")
                     tempdir = f"{cgemaps_dir}\\temp"
                     if os.path.isdir(tempdir) == True:
                         shutil.rmtree(tempdir)
@@ -351,7 +365,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile):
                     if not checksum == map_download_md5:
                         map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
                         map_data_functions.set_data(mapdatafile, map, "checksum", map_download_md5)
-                        move_map(filepath, cgemaps_dir)
+                        move_map(filepath, cgemaps_dir, url)
                         shutil.move(map_download_temp, f"{mapsdir1}\\{filename}")
                     else:
                         map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)

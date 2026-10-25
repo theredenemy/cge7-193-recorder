@@ -45,9 +45,11 @@ class CGE_RECORDER:
         self.join_sourcetv = None
         self.use_server_password = None
         self.password = None
+        self.send_discord_webhook = None
+        self.webhook_url = None
         
     def check_vars(self):
-        return {self.gamedir, self.logfilename, self.serverip, self.serverport, self.demosdirname, self.appid, self.process_name, self.server_version, self.uptime_days, self.fastdl, self.maps_dir, self.download_dir, self.mapdatafile, self.demosdirname, self.demofilesdirname, self.gamelogs_dir, self.join_sourcetv, self.use_server_password, self.password}
+        return {self.gamedir, self.logfilename, self.serverip, self.serverport, self.demosdirname, self.appid, self.process_name, self.server_version, self.uptime_days, self.fastdl, self.maps_dir, self.download_dir, self.mapdatafile, self.demosdirname, self.demofilesdirname, self.gamelogs_dir, self.join_sourcetv, self.use_server_password, self.password, self.send_discord_webhook, self.webhook_url}
 
     def load_config(self, configfile):
             self.main_configfile = configfile
@@ -69,6 +71,8 @@ class CGE_RECORDER:
             self.join_sourcetv = configHelper.read_config(configfile, "SOURCETV", "join_sourcetv", default_value=join_sourcetv_default, is_bool=True)
             self.use_server_password = configHelper.read_config(configfile, "SOURCETV", "use_server_password", default_value=use_server_password_default, is_bool=True)
             self.password = configHelper.read_config(configfile, "SOURCETV", "password", default_value=password_default)
+            self.send_discord_webhook = configHelper.read_config(configfile, "SOURCETV", "send_discord_webhook", default_value=send_discord_webhook_default, is_bool=True)
+            self.webhook_url = configHelper.read_config(configfile, "SOURCETV", "webhook_url", default_value=webhook_url_default)
     def main(self):
         config = configparser.ConfigParser()
         endloop1 = 0
@@ -131,7 +135,7 @@ class CGE_RECORDER:
         time.sleep(3)
         source_functions.move_demos(self.gamedir, self.demosdirname, demofilesdirname=self.demofilesdirname)
         time.sleep(3)
-        source_functions.check_for_map_updates(self.gamedir, os.path.join(self.gamedir, self.download_dir, self.maps_dir), self.fastdl, self.mapdatafile)
+        source_functions.check_for_map_updates(self.gamedir, os.path.join(self.gamedir, self.download_dir, self.maps_dir), self.fastdl, self.mapdatafile, send_discord_webhook=self.send_discord_webhook, webhook_url=self.webhook_url)
         time.sleep(3)
         start_game(self.gamedir, self.logfilename, self.appid, self.process_name, self.gamelogs_dir)
         lastmodtime = os.path.getmtime(logfile)
@@ -174,7 +178,7 @@ class CGE_RECORDER:
                 maxlinescon = consolelogger.getmaxlines(logfile)
                 if maxlinescon >= 5000:
                     print("RESET GAME")
-                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver)
+                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver, send_discord_webhook=self.send_discord_webhook, webhook_url=self.webhook_url)
                     do_check = 0
                 else:
                     do_check = 0
@@ -186,7 +190,7 @@ class CGE_RECORDER:
                     self.server_version = info.version
                     configHelper.set_config(self.main_configfile, "SOURCETV", "server_version", self.server_version)
                     # RESET GAME AND LOGS BREAK
-                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver)
+                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver, send_discord_webhook=self.send_discord_webhook, webhook_url=self.webhook_url)
                     inserver = 0
                     continue
 
@@ -223,7 +227,7 @@ class CGE_RECORDER:
                 if connected_to_server == False:
                     print("Cannot connect to Server. RESET GAME")
                     # RESET GAME AND LOGS BREAK
-                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver)
+                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver, send_discord_webhook=self.send_discord_webhook, webhook_url=self.webhook_url)
                     inserver = 0
                     connected_to_server = False
                     joined_server = False
@@ -260,7 +264,7 @@ class CGE_RECORDER:
                 if joined_server == False:
                     print("Cannot join Server. RESET GAME")
                     # RESET GAME AND LOGS BREAK
-                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver)
+                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver, send_discord_webhook=self.send_discord_webhook, webhook_url=self.webhook_url)
                     inserver = 0
                     connected_to_server = False
                     joined_server = False
@@ -275,7 +279,7 @@ class CGE_RECORDER:
                         time.sleep(10)
                         print("GAME CRASH")
                         print("RESET GAME")
-                        lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver)
+                        lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver, send_discord_webhook=self.send_discord_webhook, webhook_url=self.webhook_url)
                         inserver = 0
                         break
                     try:
@@ -292,13 +296,13 @@ class CGE_RECORDER:
                             if hung:
                                 print("GAME CRASH")
                                 print("RESET GAME")
-                                lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver)
+                                lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver, send_discord_webhook=self.send_discord_webhook, webhook_url=self.webhook_url)
                                 inserver = 0
                                 break
                     except IndexError:
                         print("GAME CRASH")
                         print("RESET GAME")
-                        lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver)
+                        lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver, send_discord_webhook=self.send_discord_webhook, webhook_url=self.webhook_url)
                         inserver = 0
                         break
 
@@ -392,7 +396,7 @@ class CGE_RECORDER:
                                             print("Done")
                                             endloop4 = 1
                                             info = False
-                                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver)
+                                    lastmodtime, nextline, inserver = source_functions.reset_game(self.gamedir, self.logfilename, self.appid, self.process_name, logfile, self.gamelogs_dir, self.download_dir, self.maps_dir, self.fastdl, self.mapdatafile, lastmodtime, nextline, inserver, send_discord_webhook=self.send_discord_webhook, webhook_url=self.webhook_url)
                                     inserver = 0
                                     break
                                 else:
