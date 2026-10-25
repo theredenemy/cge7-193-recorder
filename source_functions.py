@@ -264,13 +264,16 @@ def move_map(filepath, dir, new_map_url):
                 break
             else:
                 number = number + 1
-        os.mkdir(f"{map}_{number}")
-        shutil.move(filepath, f"{hourdir}\\{map}_{number}\\" )
+        os.mkdir(os.path.join(hourdir, f"{map}_{number}"))
+        shutil.move(filepath, os.path.join(hourdir, f"{map}_{number}", filename))
         print(f"Moved {filename} to {hourdir}\\{map}_{number}\\{filename} ")
         new_map_dir = os.path.join(hourdir, f"{map}_new", f"{map}_{number}")
         os.makedirs(new_map_dir)
-        download_file(new_map_url, os.path.join(new_map_dir, f"{map}.bsp"))
+        download_file(new_map_url, os.path.join(new_map_dir, filename))
     else:
+        new_map_dir = os.path.join(hourdir, f"{map}_new", map)
+        os.makedirs(new_map_dir)
+        download_file(new_map_url, os.path.join(new_map_dir, filename))
         shutil.move(filepath, f"{hourdir}\\" )
         print(f"Moved {filename} to {hourdir}\\{filename} ")
 def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile):
