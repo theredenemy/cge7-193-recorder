@@ -26,6 +26,8 @@ def makeConfig():
       config_file.set("SOURCETV", "demofilesdirname", demofilesdirname_default)
       config_file.set("SOURCETV", "use_server_password", use_server_password_default)
       config_file.set("SOURCETV", "password", password_default)
+      config_file.set("SOURCETV", "send_discord_webhook", send_discord_webhook_default)
+      config_file.set("SOURCETV", "webhook_url", webhook_url_default)
 
       with open(r"SOURCETV.ini", 'w') as configfileObj:
          config_file.write(configfileObj)
