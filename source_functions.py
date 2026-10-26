@@ -250,13 +250,13 @@ def move_map(filepath, dir, new_map_url=None):
     file_c = time.strptime(file_ti_c)
     date = time.strftime("%Y-%m-%d", file_c)
     hour = time.strftime("%H", file_c)
-    datedir = f"{dir}\\{date}"
-    hourdir = f"{dir}\\{date}\\hour-{hour}"
+    datedir = os.path.join(dir, date)
+    hourdir = os.path.join(dir, date, f"hour-{hour}")
     filename = os.path.basename(filepath)
     if os.path.isdir(datedir) == False:
         os.mkdir(datedir)
     if os.path.isdir(hourdir) == False:
-            os.mkdir(hourdir)
+        os.mkdir(hourdir)
     if os.path.isfile(f"{hourdir}\\{filename}") == True:
         number = 0
         while True:
@@ -285,7 +285,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile, send_discord_w
     import shutil
     import traceback
     cgemaps_dir = "cgemaps"
-    tempdir = f"{cgemaps_dir}\\temp"
+    tempdir = os.path.join(cgemaps_dir, "temp")
     if os.path.isdir(cgemaps_dir) == False:
         os.mkdir(cgemaps_dir)
     if fastdl == "False":
@@ -300,7 +300,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile, send_discord_w
     try:
         for filename in os.listdir(mapsdir1):
             print(filename)
-            filepath = f"{mapsdir1}\\{filename}"
+            filepath = os.path.join(mapsdir1, filename)
             fileext = pathlib.Path(filepath).suffix
             map = pathlib.Path(filepath).stem
         
@@ -318,7 +318,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile, send_discord_w
                         if os.path.isdir(tempdir) == True:
                             shutil.rmtree(tempdir)
                         os.mkdir(tempdir)
-                        map_download_temp = f"{tempdir}\\{map}_download{fileext}"
+                        map_download_temp = os.path.join(tempdir, f"{map}_download{fileext}")
                         download_file(url, map_download_temp)
                         basename = os.path.basename(map_download_temp)
                         map_download_md5 = hashlib.md5(open(map_download_temp, 'rb').read()).hexdigest()
@@ -328,7 +328,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile, send_discord_w
                             map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
                             map_data_functions.set_data(mapdatafile, map, "checksum", map_download_md5)
                             move_map(filepath, cgemaps_dir)
-                            shutil.move(map_download_temp, f"{mapsdir1}\\{filename}")
+                            shutil.move(map_download_temp, filepath)
                         else:
                             print(f"NEW MAP : {filename}")
                             winsound.Beep(frequency=600, duration=900)
@@ -360,7 +360,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile, send_discord_w
                     if os.path.isdir(tempdir) == True:
                         shutil.rmtree(tempdir)
                     os.mkdir(tempdir)
-                    map_download_temp = f"{tempdir}\\{map}_download{fileext}"
+                    map_download_temp = os.path.join(tempdir, f"{map}_download{fileext}")
                     download_file(url, map_download_temp)
                     basename = os.path.basename(map_download_temp)
                     map_download_md5 = hashlib.md5(open(map_download_temp, 'rb').read()).hexdigest()
@@ -368,7 +368,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile, send_discord_w
                         map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
                         map_data_functions.set_data(mapdatafile, map, "checksum", map_download_md5)
                         move_map(filepath, cgemaps_dir, url)
-                        shutil.move(map_download_temp, f"{mapsdir1}\\{filename}")
+                        shutil.move(map_download_temp, filepath)
                     else:
                         map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
             else:
