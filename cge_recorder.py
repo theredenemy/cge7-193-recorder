@@ -127,7 +127,7 @@ class CGE_RECORDER:
         os.system(f"taskkill /f /im {self.process_name}")
         info = False
         time.sleep(3)
-        logfile = f"{self.gamedir}\\{self.logfilename}"
+        logfile = os.path.join(self.gamedir, self.logfilename)
         while(fileinuse_functions.is_file_in_use(logfile) == True):
             pass
         consolelogger.logstart(self.gamedir, self.logfilename, self.gamelogs_dir)

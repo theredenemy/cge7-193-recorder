@@ -9,7 +9,7 @@ def getmaxlines(filename):
             linenum += 1
         return linenum
 def logstart(gamedir, logfilename, logfile_dir=os.path.join(os.getcwd(), "gamelogs")):
-    logfile = f"{gamedir}\\{logfilename}"
+    logfile = os.path.join(gamedir, logfilename)
     if os.path.isdir("gamelogs") == False:
         os.mkdir("gamelogs")
     if os.path.isfile(logfile) == True:
@@ -30,7 +30,7 @@ def logstart(gamedir, logfilename, logfile_dir=os.path.join(os.getcwd(), "gamelo
         logstart.close
 def consolelog(gamedir, logfilename, startline=1):
     e = 0
-    logfile = f"{gamedir}\\{logfilename}"
+    logfile = os.path.join(gamedir, logfilename)
     lastmodtime = os.path.getmtime(logfile)
     lastline = 0
     lastlinenum = startline

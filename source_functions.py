@@ -71,7 +71,7 @@ def move_demos(gamedir, demosdirname, demofilesdirname="demofiles"):
         os.mkdir(demofilesdirname)
     if os.path.isdir(demosdir) == True:
         for filename in os.listdir(demosdir):
-            filepath = f"{demosdir}\\{filename}"
+            filepath = os.path.join(demosdir, filename)
             if os.path.isfile(filepath) == True:
                 fileext = pathlib.Path(filepath).suffix
                 if fileext == ".dem":
@@ -82,8 +82,8 @@ def move_demos(gamedir, demosdirname, demofilesdirname="demofiles"):
                     file_c = time.strptime(file_ti_c)
                     date = time.strftime("%Y-%m-%d", file_c)
                     hour = time.strftime("%H", file_c)
-                    datedir = f"{demofilesdirname}\\{date}"
-                    hourdir = f"{demofilesdirname}\\{date}\\hour-{hour}"
+                    datedir = os.path.join(demofilesdirname, date)
+                    hourdir = os.path.join(demofilesdirname, date, f"hour-{hour}")
                     print("Checking File Lock...")
                     while True:
                         if not fileinuse_functions.is_file_in_use(filepath):
@@ -93,10 +93,10 @@ def move_demos(gamedir, demosdirname, demofilesdirname="demofiles"):
                         os.mkdir(datedir)
                     if os.path.isdir(hourdir) == False:
                         os.mkdir(hourdir)
-                    if os.path.isfile(f"{hourdir}\\{filename}") == True:
-                        os.remove(f"{hourdir}\\{filename}")
-                    shutil.move(filepath, f"{hourdir}\\" )
-                    print(f"Moved {filename} to {hourdir}\\{filename} ")
+                    if os.path.isfile(os.path.join(hourdir, filename)) == True:
+                        os.remove(os.path.join(hourdir, filename))
+                    shutil.move(filepath, os.path.join(hourdir, filename))
+                    print(f"Moved {filename} to {os.path.join(hourdir, filename)}")
                 else:
                     print(f"skip {filename}")
     else:
@@ -133,7 +133,7 @@ def set_focus_old(process_name):
 
 def start_game(gamedir, logfilename, appid, process_name, gamelogs_dir):
     import fileinuse_functions
-    logfile = f"{gamedir}\\{logfilename}"
+    logfile = os.path.join(gamedir, logfilename)
     os.system(f"taskkill /f /im {process_name}")
     while(fileinuse_functions.is_file_in_use(logfile) == True):
         pass
@@ -266,7 +266,7 @@ def move_map(filepath, dir, new_map_url=None):
                 number = number + 1
         os.mkdir(os.path.join(hourdir, f"{map}_{number}"))
         shutil.move(filepath, os.path.join(hourdir, f"{map}_{number}", filename))
-        print(f"Moved {filename} to {hourdir}\\{map}_{number}\\{filename} ")
+        print(f"Moved {filename} to {os.path.join(hourdir, f"{map}_{number}", filename)}")
         if not new_map_url:
             new_map_dir = os.path.join(hourdir, f"{map}_new", f"{map}_{number}")
             
