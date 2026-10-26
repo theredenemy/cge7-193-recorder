@@ -496,7 +496,7 @@ class CGE_RECORDER:
                                     source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4", self.process_name)
                                     pydirectinput.press('esc')
                                     break
-                            if "Host_Error: Client's map differs from the server's" in conlist:
+                            if "Host_Error: Client's map differs from the server's" in conlist or "Host_Error: Bad map" in conlist:
                                 time.sleep(3)
                                 source_functions.run_cmd("echo in-server", self.process_name)
                                 conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline-3)
