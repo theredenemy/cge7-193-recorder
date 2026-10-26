@@ -71,7 +71,7 @@ def move_demos(gamedir, demosdirname, demofilesdirname="demofiles"):
         os.mkdir(demofilesdirname)
     if os.path.isdir(demosdir) == True:
         for filename in os.listdir(demosdir):
-            filepath = f"{demosdir}\\{filename}"
+            filepath = os.path.join(demosdir, filename)
             if os.path.isfile(filepath) == True:
                 fileext = pathlib.Path(filepath).suffix
                 if fileext == ".dem":
@@ -82,8 +82,8 @@ def move_demos(gamedir, demosdirname, demofilesdirname="demofiles"):
                     file_c = time.strptime(file_ti_c)
                     date = time.strftime("%Y-%m-%d", file_c)
                     hour = time.strftime("%H", file_c)
-                    datedir = f"{demofilesdirname}\\{date}"
-                    hourdir = f"{demofilesdirname}\\{date}\\hour-{hour}"
+                    datedir = os.path.join(demofilesdirname, date)
+                    hourdir = os.path.join(demofilesdirname, date, f"hour-{hour}")
                     print("Checking File Lock...")
                     while True:
                         if not fileinuse_functions.is_file_in_use(filepath):
@@ -93,10 +93,10 @@ def move_demos(gamedir, demosdirname, demofilesdirname="demofiles"):
                         os.mkdir(datedir)
                     if os.path.isdir(hourdir) == False:
                         os.mkdir(hourdir)
-                    if os.path.isfile(f"{hourdir}\\{filename}") == True:
-                        os.remove(f"{hourdir}\\{filename}")
-                    shutil.move(filepath, f"{hourdir}\\" )
-                    print(f"Moved {filename} to {hourdir}\\{filename} ")
+                    if os.path.isfile(os.path.join(hourdir, filename)) == True:
+                        os.remove(os.path.join(hourdir, filename))
+                    shutil.move(filepath, os.path.join(hourdir, filename))
+                    print(f"Moved {filename} to {os.path.join(hourdir, filename)}")
                 else:
                     print(f"skip {filename}")
     else:
@@ -133,7 +133,7 @@ def set_focus_old(process_name):
 
 def start_game(gamedir, logfilename, appid, process_name, gamelogs_dir):
     import fileinuse_functions
-    logfile = f"{gamedir}\\{logfilename}"
+    logfile = os.path.join(gamedir, logfilename)
     os.system(f"taskkill /f /im {process_name}")
     while(fileinuse_functions.is_file_in_use(logfile) == True):
         pass
@@ -250,13 +250,13 @@ def move_map(filepath, dir, new_map_url=None):
     file_c = time.strptime(file_ti_c)
     date = time.strftime("%Y-%m-%d", file_c)
     hour = time.strftime("%H", file_c)
-    datedir = f"{dir}\\{date}"
-    hourdir = f"{dir}\\{date}\\hour-{hour}"
+    datedir = os.path.join(dir, date)
+    hourdir = os.path.join(dir, date, f"hour-{hour}")
     filename = os.path.basename(filepath)
     if os.path.isdir(datedir) == False:
         os.mkdir(datedir)
     if os.path.isdir(hourdir) == False:
-            os.mkdir(hourdir)
+        os.mkdir(hourdir)
     if os.path.isfile(f"{hourdir}\\{filename}") == True:
         number = 0
         while True:
@@ -266,7 +266,7 @@ def move_map(filepath, dir, new_map_url=None):
                 number = number + 1
         os.mkdir(os.path.join(hourdir, f"{map}_{number}"))
         shutil.move(filepath, os.path.join(hourdir, f"{map}_{number}", filename))
-        print(f"Moved {filename} to {hourdir}\\{map}_{number}\\{filename} ")
+        print(f"Moved {filename} to {os.path.join(hourdir, f"{map}_{number}", filename)}")
         if not new_map_url:
             new_map_dir = os.path.join(hourdir, f"{map}_new", f"{map}_{number}")
             
@@ -285,7 +285,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile, send_discord_w
     import shutil
     import traceback
     cgemaps_dir = "cgemaps"
-    tempdir = f"{cgemaps_dir}\\temp"
+    tempdir = os.path.join(cgemaps_dir, "temp")
     if os.path.isdir(cgemaps_dir) == False:
         os.mkdir(cgemaps_dir)
     if fastdl == "False":
@@ -300,7 +300,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile, send_discord_w
     try:
         for filename in os.listdir(mapsdir1):
             print(filename)
-            filepath = f"{mapsdir1}\\{filename}"
+            filepath = os.path.join(mapsdir1, filename)
             fileext = pathlib.Path(filepath).suffix
             map = pathlib.Path(filepath).stem
         
@@ -318,7 +318,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile, send_discord_w
                         if os.path.isdir(tempdir) == True:
                             shutil.rmtree(tempdir)
                         os.mkdir(tempdir)
-                        map_download_temp = f"{tempdir}\\{map}_download{fileext}"
+                        map_download_temp = os.path.join(tempdir, f"{map}_download{fileext}")
                         download_file(url, map_download_temp)
                         basename = os.path.basename(map_download_temp)
                         map_download_md5 = hashlib.md5(open(map_download_temp, 'rb').read()).hexdigest()
@@ -328,7 +328,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile, send_discord_w
                             map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
                             map_data_functions.set_data(mapdatafile, map, "checksum", map_download_md5)
                             move_map(filepath, cgemaps_dir)
-                            shutil.move(map_download_temp, f"{mapsdir1}\\{filename}")
+                            shutil.move(map_download_temp, filepath)
                         else:
                             print(f"NEW MAP : {filename}")
                             winsound.Beep(frequency=600, duration=900)
@@ -360,7 +360,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile, send_discord_w
                     if os.path.isdir(tempdir) == True:
                         shutil.rmtree(tempdir)
                     os.mkdir(tempdir)
-                    map_download_temp = f"{tempdir}\\{map}_download{fileext}"
+                    map_download_temp = os.path.join(tempdir, f"{map}_download{fileext}")
                     download_file(url, map_download_temp)
                     basename = os.path.basename(map_download_temp)
                     map_download_md5 = hashlib.md5(open(map_download_temp, 'rb').read()).hexdigest()
@@ -368,7 +368,7 @@ def check_for_map_updates(gamedir, maps_dir, fastdl, mapdatafile, send_discord_w
                         map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
                         map_data_functions.set_data(mapdatafile, map, "checksum", map_download_md5)
                         move_map(filepath, cgemaps_dir, url)
-                        shutil.move(map_download_temp, f"{mapsdir1}\\{filename}")
+                        shutil.move(map_download_temp, filepath)
                     else:
                         map_data_functions.set_data(mapdatafile, map, "last_updated", unix_time)
             else:
