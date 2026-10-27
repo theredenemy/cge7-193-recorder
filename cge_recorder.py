@@ -207,7 +207,7 @@ class CGE_RECORDER:
                         # Bug Fix
                         print("Connecting to Server")
                         for i in range(20):
-                            conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline-3)
+                            conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline)
                             if "The server you are trying to connect to is running" in conlist:
                                 joined_server = False
                                 game_disconnect = True
@@ -236,7 +236,7 @@ class CGE_RECORDER:
                     print("Joining Server")
                     for i in range(60):
                         print(f"{i}:", end='\r')
-                        conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline-3)
+                        conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline)
                         if listfindlib.findtext(conlist, "Disconnect") == True:
                             joined_server = False
                             game_disconnect = True
@@ -318,7 +318,7 @@ class CGE_RECORDER:
                         time.sleep(3)
                         for i in range(5):
                             time.sleep(1)
-                            conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline-3)
+                            conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline)
                             if "Connection failed after 4 retries" in conlist:
                                 print("\nDisconnect")
                                 print("FUCK")
@@ -348,11 +348,11 @@ class CGE_RECORDER:
                             if "The server you are trying to connect to is running" in conlist:
                                 time.sleep(2)
                                 source_functions.run_cmd("echo in-server", self.process_name)
-                                conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline-3)
+                                conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline)
                                 if "in-server" in conlist:
                                     nextline = conlist[-1]
                                     source_functions.run_cmd("status", self.process_name)
-                                    conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline-3)
+                                    conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline)
                                     nextline = conlist[-1]
                                     if listfindlib.findword(conlist, "hostname") == True:
                                         host_disconnect = False
@@ -362,7 +362,7 @@ class CGE_RECORDER:
                                         host_disconnect = True
                                 else:
                                     host_disconnect = True
-                                conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline-3)
+                                conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline)
                                 if host_disconnect == True:
                                     print("\nDisconnect")
                                     if host_disconnect == True:
@@ -408,11 +408,11 @@ class CGE_RECORDER:
                             if listfindlib.findtext(conlist, "Disconnect") == True:
                                 time.sleep(5)
                                 source_functions.run_cmd("echo in-server", self.process_name)
-                                conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline-3)
+                                conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline)
                                 if "in-server" in conlist:
                                     nextline = conlist[-1]
                                     source_functions.run_cmd("status", self.process_name)
-                                    conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline-3)
+                                    conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline)
                                     nextline = conlist[-1]
                                     if listfindlib.findword(conlist, "hostname") == True:
                                         host_disconnect = False
@@ -461,11 +461,11 @@ class CGE_RECORDER:
                             if "Host_Error: Map is missing" in conlist:
                                 time.sleep(3)
                                 source_functions.run_cmd("echo in-server", self.process_name)
-                                conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline-3)
+                                conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline)
                                 if "in-server" in conlist:
                                     nextline = conlist[-1]
                                     source_functions.run_cmd("status", self.process_name)
-                                    conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline-3)
+                                    conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline)
                                     nextline = conlist[-1]
                                     if listfindlib.findword(conlist, "hostname") == True:
                                         host_disconnect = False
@@ -499,11 +499,11 @@ class CGE_RECORDER:
                             if "Host_Error: Client's map differs from the server's" in conlist or "Host_Error: Bad map" in conlist:
                                 time.sleep(3)
                                 source_functions.run_cmd("echo in-server", self.process_name)
-                                conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline-3)
+                                conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline)
                                 if "in-server" in conlist:
                                     nextline = conlist[-1]
                                     source_functions.run_cmd("status", self.process_name)
-                                    conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline-3)
+                                    conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline)
                                     nextline = conlist[-1]
                                     if listfindlib.findword(conlist, "hostname") == True:
                                         host_disconnect = False
@@ -545,7 +545,7 @@ class CGE_RECORDER:
                                 time.sleep(1)
                                 nextline = conlist[-1]
                                 source_functions.run_cmd("status", self.process_name)
-                                conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline-3)
+                                conlist = consolelogger.consolelog(self.gamedir, self.logfilename, nextline)
                                 nextline = conlist[-1]
                                 if listfindlib.findword(conlist, "hostname") == True:
                                     host_disconnect = False
