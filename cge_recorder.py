@@ -254,7 +254,7 @@ class CGE_RECORDER:
                     pydirectinput.press("enter")
                     source_functions.set_focus(self.process_name)
                     time.sleep(1)
-                    source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6", self.process_name)
+                    
                     pydirectinput.press("enter")
                     pydirectinput.press("enter")
                     inserver = 0
@@ -326,7 +326,7 @@ class CGE_RECORDER:
                                 source_functions.set_focus(self.process_name)
                                 pydirectinput.press("enter")
                                 time.sleep(1)
-                                source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6", self.process_name)
+                                
                                 pydirectinput.press("enter")
                                 pydirectinput.press("enter")
                                 inserver = 0
@@ -339,7 +339,7 @@ class CGE_RECORDER:
                                 source_functions.set_focus(self.process_name)
                                 pydirectinput.press("enter")
                                 time.sleep(1)
-                                source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6", self.process_name)
+                                
                                 pydirectinput.press("enter")
                                 pydirectinput.press("enter")
                                 inserver = 0
@@ -371,7 +371,7 @@ class CGE_RECORDER:
                                     time.sleep(2)
                                     pydirectinput.press("enter")
                                     pydirectinput.press("enter")
-                                    source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6", self.process_name)
+                                    
                                     source_functions.run_cmd("disconnect", self.process_name)
                                     source_functions.move_demos(self.gamedir, self.demosdirname, demofilesdirname=self.demofilesdirname)
                                     inserver = 0
@@ -400,7 +400,7 @@ class CGE_RECORDER:
                                     inserver = 0
                                     break
                                 else:
-                                    source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6", self.process_name)
+                                    
                                     pydirectinput.press('esc')
                                     break
 
@@ -432,16 +432,16 @@ class CGE_RECORDER:
                                     pydirectinput.press("enter")
                                     pydirectinput.press("enter")
                                     # This is a Fix for an Endless Loop What the fuck
-                                    source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6", self.process_name)
+                                    
                                     source_functions.run_cmd("disconnect", self.process_name)
-                                    source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6", self.process_name)
+                                    
                                     source_functions.move_demos(self.gamedir, self.demosdirname, demofilesdirname=self.demofilesdirname)
                                     inserver = 0
                                     do_check = 1
                                     break
                                 else:
                                     # what
-                                    source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6", self.process_name)
+                                    
                                     pydirectinput.press('esc')
                                     break
                             if "Server connection timed out" in conlist:
@@ -451,9 +451,9 @@ class CGE_RECORDER:
                                 time.sleep(3)
                                 pydirectinput.press("enter")
                                 pydirectinput.press("enter")
-                                source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6", self.process_name)
+                                
                                 source_functions.run_cmd("disconnect", self.process_name)
-                                source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6", self.process_name)
+                                
                                 source_functions.move_demos(self.gamedir, self.demosdirname, demofilesdirname=self.demofilesdirname)
                                 inserver = 0
                                 do_check = 1
@@ -484,16 +484,16 @@ class CGE_RECORDER:
                                     time.sleep(3)
                                     pydirectinput.press("enter")
                                     pydirectinput.press("enter")
-                                    source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4", self.process_name)
+                                    
                                     source_functions.run_cmd("disconnect", self.process_name)
-                                    source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6", self.process_name)
+                                    
                                     source_functions.move_demos(self.gamedir, self.demosdirname, demofilesdirname=self.demofilesdirname)
                                     inserver = 0
                                     do_check = 1
                                     break
                                 else:
                                     # what
-                                    source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4", self.process_name)
+                                    
                                     pydirectinput.press('esc')
                                     break
                             if "Host_Error: Client's map differs from the server's" in conlist or "Host_Error: Bad map" in conlist:
@@ -522,9 +522,9 @@ class CGE_RECORDER:
                                     time.sleep(3)
                                     pydirectinput.press("enter")
                                     pydirectinput.press("enter")
-                                    source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4", self.process_name)
+                                    
                                     source_functions.run_cmd("disconnect", self.process_name)
-                                    source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6", self.process_name)
+                                    
                                     source_functions.move_demos(self.gamedir, self.demosdirname, demofilesdirname=self.demofilesdirname)
 
                                     inserver = 0
@@ -533,7 +533,7 @@ class CGE_RECORDER:
                                     break
                                 else:
                                     # what
-                                    source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4", self.process_name)
+                                    
                                     pydirectinput.press('esc')
                                     break
 
@@ -541,7 +541,7 @@ class CGE_RECORDER:
                             if listfindlib.findtext(conlist, "hello") == True:
                                 source_functions.chat("hi BREAK", self.process_name)
                                 # FUCK
-                                source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6; echo BREAK", self.process_name)
+                                
                                 time.sleep(1)
                                 nextline = conlist[-1]
                                 source_functions.run_cmd("status", self.process_name)
@@ -562,9 +562,9 @@ class CGE_RECORDER:
                                     time.sleep(3)
                                     pydirectinput.press("enter")
                                     pydirectinput.press("enter")
-                                    source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4", self.process_name)
+                                    
                                     source_functions.run_cmd("disconnect", self.process_name)
-                                    source_functions.run_cmd("echo 1; echo 2; echo 3; echo 4; echo 5; echo 6", self.process_name)
+                                    
                                     source_functions.move_demos(self.gamedir, self.demosdirname, demofilesdirname=self.demofilesdirname)
                                     inserver = 0
                                     do_check = 1

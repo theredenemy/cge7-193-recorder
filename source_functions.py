@@ -217,9 +217,9 @@ def connect_to_server(process_name, server_ip, server_port, source_tv=True, use_
     print(f"join {ip}:{port}")
     winsound.Beep(frequency=590, duration=500)
     if use_server_password:
-        run_cmd(f"echo 1; echo 2; echo 3; echo 4; connect {ip}:{port}; password {password}", process_name)
+        run_cmd(f"connect {ip}:{port}; password {password}", process_name)
     else:
-        run_cmd(f"echo 1; echo 2; echo 3; echo 4; connect {ip}:{port}", process_name)
+        run_cmd(f"connect {ip}:{port}", process_name)
     time.sleep(5)
     return True
 
